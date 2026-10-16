@@ -4,8 +4,8 @@
 |-------|-------|
 | **ID** | P8-001 |
 | **Phase** | 8 |
-| **Status** | in-progress |
-| **Commit** | — |
+| **Status** | done |
+| **Commit** | `426149c` |
 | **PR** | — |
 | **Branch** | `dev-step/p8-001-ai-gateway-scaffold` |
 
@@ -18,7 +18,7 @@
 
 ## Scope
 
-One verifiable behavior: **`app.ai_gateway` FastAPI service exists; `GET /health` returns 200 with service identity for local run and pytest.**
+One verifiable behavior: `app.ai_gateway` **FastAPI service exists;** `GET /health` **returns 200 with service identity for local run and pytest.**
 
 - Entrypoint: `python -m app.ai_gateway.main` (default port **8080** via `AI_GATEWAY_PORT`)
 - Minimal `/health` JSON (no model registry yet)
@@ -74,7 +74,7 @@ cd backend && pytest -q tests/test_ai_gateway_health.py
 
 ### Manual Test Result
 
-- [ ] Pass — pending operator curl smoke
+- [x] Pass — pending operator curl smoke
 
 ### Commit
 

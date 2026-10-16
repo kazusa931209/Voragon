@@ -1,6 +1,9 @@
 from typing import Literal
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from app.ai_gateway.registry import DEFAULT_REGISTRY_PATH
 
 
 class Settings(BaseSettings):
@@ -11,6 +14,8 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
     ai_gateway_port: int = 8080
+    ai_gateway_registry_path: str = Field(default_factory=lambda: str(DEFAULT_REGISTRY_PATH))
+    ai_gateway_upstream_timeout_s: float = 120.0
     log_level: str = "info"
     log_format: Literal["console", "json"] = "console"
     reconnect_window_s: int = 30

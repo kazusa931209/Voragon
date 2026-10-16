@@ -14,7 +14,7 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 
 ## Active Step
 
-**P8-001** — [AI Gateway service scaffold](dev-step-p8-001-ai-gateway-scaffold.md) (`in-progress`).
+**P8-003** — [AI Gateway ASR inference proxy](dev-step-p8-003-asr-inference-proxy.md) (`in-progress`).
 
 ---
 
@@ -146,7 +146,9 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 
 | ID | Title | Status | PR | Doc |
 |----|-------|--------|-----|-----|
-| P8-001 | AI Gateway service scaffold | in-progress | — | [dev-step-p8-001-ai-gateway-scaffold.md](dev-step-p8-001-ai-gateway-scaffold.md) |
+| P8-001 | AI Gateway service scaffold | done | — | [dev-step-p8-001-ai-gateway-scaffold.md](dev-step-p8-001-ai-gateway-scaffold.md) |
+| P8-002 | AI Gateway model registry | in-progress | — | [dev-step-p8-002-model-registry.md](dev-step-p8-002-model-registry.md) |
+| P8-003 | AI Gateway ASR inference proxy | in-progress | — | [dev-step-p8-003-asr-inference-proxy.md](dev-step-p8-003-asr-inference-proxy.md) |
 
 **Suggested order (planned):** P8-001 → P8-002 (model registry) → P8-003 (ASR inference proxy) → P8-004 (backend health checks) → P8-005 (fallback) → P8-006 (realtime routes via gateway) → P8-007 (container image) → P8-008 (Kind/EKS manifests) → P8-009 (gateway metrics) → P8-010 (ops docs + Phase 8 exit).
 

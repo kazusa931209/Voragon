@@ -1,0 +1,11 @@
+# Default AI Gateway model registry (local dev; K8s ConfigMap in P8-008).
+models:
+  whisper-large-v3-turbo:
+    type: asr
+    endpoint: http://asr-service:8081
+    capabilities:
+      - asr.default
+    version: "1.0"
+    languages:
+      - en
+    health_check_interval_s: 30

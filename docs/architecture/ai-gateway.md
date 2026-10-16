@@ -89,7 +89,7 @@ The model registry maps capability aliases to model configurations:
 models:
   whisper-large-v3-turbo:
     type: asr
-    endpoint: http://asr-service:8080
+    endpoint: http://asr-service:8081
     capabilities: [asr.default]
     version: "1.0"
     languages: [en]
@@ -97,7 +97,7 @@ models:
 
   whisper-small:
     type: asr
-    endpoint: http://asr-service-fast:8080
+    endpoint: http://asr-service-fast:8081
     capabilities: [asr.fast]
     version: "1.0"
     languages: [en]
