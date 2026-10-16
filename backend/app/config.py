@@ -10,6 +10,7 @@ class Settings(BaseSettings):
 
     host: str = "0.0.0.0"
     port: int = 8000
+    ai_gateway_port: int = 8080
     log_level: str = "info"
     log_format: Literal["console", "json"] = "console"
     reconnect_window_s: int = 30

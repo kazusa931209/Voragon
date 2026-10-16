@@ -14,7 +14,7 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 
 ## Active Step
 
-**Phase 7 exit** — [Phase 7 exit verification](dev-step-phase7-exit.md) (operator sign-off; P7-001–P7-008 done).
+**P8-001** — [AI Gateway service scaffold](dev-step-p8-001-ai-gateway-scaffold.md) (`in-progress`).
 
 ---
 
@@ -142,6 +142,18 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 
 ---
 
-## Phase 8+
+## Phase 8: AI Gateway
 
-Dev-steps for Phase 8 (AI Gateway) and beyond — see [phases.md](phases.md).
+| ID | Title | Status | PR | Doc |
+|----|-------|--------|-----|-----|
+| P8-001 | AI Gateway service scaffold | in-progress | — | [dev-step-p8-001-ai-gateway-scaffold.md](dev-step-p8-001-ai-gateway-scaffold.md) |
+
+**Suggested order (planned):** P8-001 → P8-002 (model registry) → P8-003 (ASR inference proxy) → P8-004 (backend health checks) → P8-005 (fallback) → P8-006 (realtime routes via gateway) → P8-007 (container image) → P8-008 (Kind/EKS manifests) → P8-009 (gateway metrics) → P8-010 (ops docs + Phase 8 exit).
+
+**Phase 8 exit:** See [phases.md](phases.md) — realtime-service calls AI Gateway, not ASR directly; model changes via config.
+
+---
+
+## Phase 9+
+
+Dev-steps for Phase 9 and beyond — see [phases.md](phases.md).
