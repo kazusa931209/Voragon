@@ -4,8 +4,8 @@
 |-------|-------|
 | **ID** | P8-002 |
 | **Phase** | 8 |
-| **Status** | in-progress |
-| **Commit** | — |
+| **Status** | done |
+| **Commit** | `bd4d9d2` |
 | **PR** | — |
 | **Branch** | `dev-step/p8-002-model-registry` |
 

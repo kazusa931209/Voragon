@@ -13,9 +13,10 @@ from pathlib import Path
 
 import httpx
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
+from app.ai_gateway.health import ModelHealthChecker, ModelHealthStore
 from app.ai_gateway.registry import load_model_registry
 from app.ai_gateway.routes import router as gateway_router
 from app.config import get_settings
@@ -34,14 +35,31 @@ async def lifespan(app: FastAPI):
     timeout = httpx.Timeout(settings.ai_gateway_upstream_timeout_s)
     http_client = httpx.AsyncClient(timeout=timeout)
     app.state.http_client = http_client
+    health_store = ModelHealthStore(
+        failure_threshold=settings.ai_gateway_health_failure_threshold,
+        recovery_threshold=settings.ai_gateway_health_recovery_threshold,
+    )
+    app.state.model_health = health_store
+    health_checker = ModelHealthChecker(
+        registry,
+        http_client,
+        health_store,
+        check_timeout_s=settings.ai_gateway_health_check_timeout_s,
+        check_interval_s=settings.ai_gateway_health_check_interval_s,
+        enabled=settings.ai_gateway_health_checks_enabled,
+    )
+    app.state.health_checker = health_checker
     logger.info(
         "Loaded model registry from %s (%d models)",
         registry_path,
         len(registry.models),
     )
+    await health_checker.check_all()
+    health_checker.start_background()
     try:
         yield
     finally:
+        await health_checker.stop_background()
         await http_client.aclose()
 
 
@@ -50,13 +68,23 @@ app.include_router(gateway_router)
 
 
 @app.get("/health")
-async def health() -> JSONResponse:
-    """Kubernetes liveness/readiness baseline (registry probe depth in P8-004)."""
-    payload = {
-        "status": "healthy",
+async def health(request: Request) -> JSONResponse:
+    """Gateway health; 503 when health checks enabled and no model is routable."""
+    settings = get_settings()
+    registry = request.app.state.model_registry
+    health_store: ModelHealthStore = request.app.state.model_health
+    model_ids = list(registry.models.keys())
+    routable = health_store.any_routable(
+        model_ids,
+        checks_enabled=settings.ai_gateway_health_checks_enabled,
+    )
+    ok = routable or not settings.ai_gateway_health_checks_enabled
+    payload: dict[str, object] = {
+        "status": "healthy" if ok else "degraded",
         "service": SERVICE_NAME,
+        "models_routable": routable,
     }
-    return JSONResponse(status_code=200, content=payload)
+    return JSONResponse(status_code=200 if ok else 503, content=payload)
 
 
 def main() -> None:

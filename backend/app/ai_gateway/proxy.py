@@ -6,6 +6,7 @@ import httpx
 from fastapi import HTTPException
 
 from app.ai_gateway.api_models import GatewayAsrInferenceRequest, GatewayAsrInferenceResponse
+from app.ai_gateway.health import ModelHealthStore
 from app.ai_gateway.registry import ModelRegistry
 from app.asr.api_models import AsrInferenceRequest, AsrInferenceResponse
 
@@ -14,6 +15,9 @@ async def proxy_asr_inference(
     registry: ModelRegistry,
     http_client: httpx.AsyncClient,
     body: GatewayAsrInferenceRequest,
+    *,
+    health_store: ModelHealthStore,
+    health_checks_enabled: bool,
 ) -> GatewayAsrInferenceResponse:
     try:
         model_id, entry = registry.resolve_capability(body.capability)
@@ -24,6 +28,12 @@ async def proxy_asr_inference(
         raise HTTPException(
             status_code=400,
             detail=f"Capability {body.capability!r} resolves to non-ASR model {model_id!r}",
+        )
+
+    if not health_store.is_routable(model_id, checks_enabled=health_checks_enabled):
+        raise HTTPException(
+            status_code=503,
+            detail=f"Model {model_id!r} is unhealthy or not yet ready",
         )
 
     upstream_payload = AsrInferenceRequest(

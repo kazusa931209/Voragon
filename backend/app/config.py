@@ -16,6 +16,11 @@ class Settings(BaseSettings):
     ai_gateway_port: int = 8080
     ai_gateway_registry_path: str = Field(default_factory=lambda: str(DEFAULT_REGISTRY_PATH))
     ai_gateway_upstream_timeout_s: float = 120.0
+    ai_gateway_health_checks_enabled: bool = True
+    ai_gateway_health_check_interval_s: float = 30.0
+    ai_gateway_health_check_timeout_s: float = 5.0
+    ai_gateway_health_failure_threshold: int = 3
+    ai_gateway_health_recovery_threshold: int = 2
     log_level: str = "info"
     log_format: Literal["console", "json"] = "console"
     reconnect_window_s: int = 30

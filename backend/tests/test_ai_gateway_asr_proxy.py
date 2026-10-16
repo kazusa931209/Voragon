@@ -23,9 +23,13 @@ def _mock_asr_app(*, warmed: bool) -> FastAPI:
 
 
 @pytest.fixture
-def gateway_client() -> TestClient:
-    from app.ai_gateway.main import app
+def gateway_client(monkeypatch: pytest.MonkeyPatch) -> TestClient:
+    monkeypatch.setenv("AI_GATEWAY_HEALTH_CHECKS_ENABLED", "false")
+    import importlib
 
+    import app.ai_gateway.main as gateway_main
+
+    importlib.reload(gateway_main)
     mock_asr = _mock_asr_app(warmed=True)
     transport = ASGITransport(app=mock_asr)
     http_client = httpx.AsyncClient(
@@ -33,7 +37,7 @@ def gateway_client() -> TestClient:
         base_url="http://asr-service:8081",
         timeout=30.0,
     )
-    with TestClient(app) as client:
+    with TestClient(gateway_main.app) as client:
         client.app.state.http_client = http_client
         yield client
     asyncio.run(http_client.aclose())
@@ -72,9 +76,13 @@ def test_gateway_unknown_capability(gateway_client: TestClient) -> None:
     assert response.status_code == 404
 
 
-def test_gateway_upstream_unavailable() -> None:
-    from app.ai_gateway.main import app
+def test_gateway_upstream_unavailable(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("AI_GATEWAY_HEALTH_CHECKS_ENABLED", "false")
+    import importlib
 
+    import app.ai_gateway.main as gateway_main
+
+    importlib.reload(gateway_main)
     mock_asr = _mock_asr_app(warmed=False)
     transport = ASGITransport(app=mock_asr)
     http_client = httpx.AsyncClient(
@@ -83,7 +91,7 @@ def test_gateway_upstream_unavailable() -> None:
         timeout=30.0,
     )
     audio_b64 = base64.b64encode(b"\x00" * MIN_AUDIO_BYTES_FOR_TEXT).decode("ascii")
-    with TestClient(app) as client:
+    with TestClient(gateway_main.app) as client:
         client.app.state.http_client = http_client
         response = client.post(
             "/v1/inference/asr",

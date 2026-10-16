@@ -40,9 +40,13 @@ models:
 
 @pytest.fixture
 def ai_gateway_client(monkeypatch: pytest.MonkeyPatch) -> TestClient:
-    from app.ai_gateway.main import app
+    monkeypatch.setenv("AI_GATEWAY_HEALTH_CHECKS_ENABLED", "false")
+    import importlib
 
-    with TestClient(app) as client:
+    import app.ai_gateway.main as gateway_main
+
+    importlib.reload(gateway_main)
+    with TestClient(gateway_main.app) as client:
         yield client
 
 
@@ -74,6 +78,7 @@ models:
         encoding="utf-8",
     )
     monkeypatch.setenv("AI_GATEWAY_REGISTRY_PATH", str(path))
+    monkeypatch.setenv("AI_GATEWAY_HEALTH_CHECKS_ENABLED", "false")
     import app.ai_gateway.main as gateway_main
 
     importlib.reload(gateway_main)
