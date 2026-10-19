@@ -4,9 +4,9 @@
 |-------|-------|
 | **ID** | P5-003 |
 | **Phase** | 5 |
-| **Status** | in-progress |
-| **Commit** | — |
-| **PR** | — |
+| **Status** | done |
+| **Commit** | [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e) |
+| **PR** | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) |
 | **Branch** | `dev-step/p5-003-model-cache-pvc` |
 
 ## Spec References
@@ -33,7 +33,7 @@ One verifiable behavior: **ASR/VAD model caches on a PVC survive pod deletion an
 - [x] PVC manifest `voragon-model-cache` (10Gi RWO)
 - [x] Deployment mounts `/var/lib/voragon/model-cache`
 - [x] ConfigMap paths match Compose
-- [ ] Pod delete → faster second startup (operator)
+- [x] Pod delete → faster second startup (operator)
 
 ## Manual Test
 
@@ -74,8 +74,8 @@ cd backend && pytest -q
 
 ### Manual Test Result
 
-- [ ] Pass — pending Kind E2E
+- [x] Pass — 2026-10-15 (PVC bound; pod delete → faster warmup)
 
 ### Commit
 
-- **Hash:** —
+- **Hash:** [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e)

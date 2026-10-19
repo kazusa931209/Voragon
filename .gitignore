@@ -1,2 +1,18 @@
 desktop/.vite/deps/_metadata.json
 desktop/.vite/deps/package.json
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+backend/uv.lock

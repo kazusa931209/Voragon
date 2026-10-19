@@ -161,7 +161,7 @@ For initial deployment, use On-Demand instances. Introduce Spot when session rec
 | EC2 (M6i) | CPU service nodes | Phase 6 |
 | ALB | WebSocket ingress, TLS termination | Phase 6 |
 | API Gateway | External API entry, auth, rate limiting | Phase 6 |
-| ECR | Container image registry | Phase 4 |
+| ECR | Container image registry | Phase 6 |
 | Secrets Manager | Secrets storage | Phase 6 |
 | CloudWatch | Logs, basic metrics | Phase 6 |
 | S3 | Model artifact storage (optional) | Phase 7 |

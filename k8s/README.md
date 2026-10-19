@@ -127,6 +127,16 @@ k8s/
 | Fast daily desktop dev | `cd docker && docker compose up` |
 | Validate K8s manifests, probes, rollout | Kind + this README |
 
+## AWS EKS (Phase 6)
+
+Staging/production manifests live under [k8s/eks/](eks/README.md) (ECR image via Kustomize). Cluster: [infra/eks/README.md](../infra/eks/README.md).
+
+| | Kind (`k8s/local/`) | EKS (`k8s/eks/`) |
+|--|---------------------|------------------|
+| Image | `voragon/realtime-backend:local` + `kind load` | ECR URI + tag ([infra/ecr](../infra/ecr/README.md)) |
+| Pull policy | `IfNotPresent` | `Always` |
+| PVC class | Kind `standard` | `gp2` |
+
 ## Related docs
 
 - [Local Kubernetes (Kind)](../docs/operations/kubernetes-local.md)

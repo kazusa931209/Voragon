@@ -4,14 +4,15 @@
 
 The Realtime WebSocket API is the primary communication channel between the Voragon desktop application and the Realtime Backend. It handles session management, audio streaming, and transcript delivery.
 
-**Status:** Partially implemented — Phase 1 covers connect, audio, and transcripts; Phase 2 adds heartbeat ([P2-001](../roadmap/dev-step-p2-001-ping-pong-heartbeat.md)), session end ([P2-002](../roadmap/dev-step-p2-002-session-ended.md)), audio ordering ([P2-003](../roadmap/dev-step-p2-003-audio-seq-ordering.md)), buffer overflow ([P2-004](../roadmap/dev-step-p2-004-buffer-overflow.md)), detached session retention ([P2-005](../roadmap/dev-step-p2-005-session-registry-reconnect-window.md)), `session.resume` ([P2-006](../roadmap/dev-step-p2-006-session-resume.md)), and server error alignment ([P2-007](../roadmap/dev-step-p2-007-api-error-handling.md)). Auth and production connection rejection remain future phase.
+**Status:** Partially implemented — Phase 1–2 cover connect, audio, transcripts, heartbeat, session lifecycle, and errors. Production JWT auth is implemented in [P6-005](../roadmap/dev-step-p6-005-api-gateway-auth.md) (optional locally via `JWT_AUTH_REQUIRED`).
 
 ## Endpoint
 
 | Environment | URL |
 |-------------|-----|
 | Local development | `ws://localhost:8000/v1/realtime` |
-| Production | `wss://api.voragon.example/v1/realtime` |
+| Staging (ALB DNS only) | `wss://<alb-host>/v1/realtime` — [k8s/eks/alb](../../k8s/eks/alb/README.md) |
+| Staging / production (custom host) | `wss://api.voragon.example/v1/realtime` — [P6-007](../roadmap/dev-step-p6-007-dns-tls.md), [infra/dns](../../infra/dns/README.md) |
 
 The `/v1/` prefix enables future protocol versions (`/v2/realtime`) without breaking existing clients.
 
@@ -423,13 +424,15 @@ On reconnect:
 
 ## Authentication (Production)
 
-In production, the WebSocket connection requires authentication:
+When `JWT_AUTH_REQUIRED=true` on the realtime backend (staging EKS after [P6-005](../roadmap/dev-step-p6-005-api-gateway-auth.md)):
 
-1. Client obtains JWT from API Gateway auth endpoint
-2. Client connects to WebSocket with `Authorization: Bearer <token>` header
-3. Server validates token before establishing session
+1. Client obtains a JWT from the API Gateway HTTP endpoint `POST /v1/auth/token` with header `x-api-key` (see [infra/apigateway/README.md](../../infra/apigateway/README.md)).
+2. Client connects to `wss://<host>/v1/realtime` with either:
+   - `Authorization: Bearer <access_token>` (tools and clients that support WebSocket headers), or
+   - Query parameter `access_token=<access_token>` (Voragon desktop / browser WebSocket API).
+3. Server validates HS256 JWT (`aud`: `voragon-realtime`, required `exp` and `sub`) **before** `session.started`. Invalid or missing tokens close the socket with code **4401**.
 
-Local development does not require authentication.
+Local development and default EKS manifests do **not** require authentication (`JWT_AUTH_REQUIRED` defaults to false).
 
 ## Versioning
 

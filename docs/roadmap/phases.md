@@ -156,7 +156,7 @@ Desktop (Tauri) → WebSocket → Backend → VAD → ASR → Transcript → Des
 
 ## Phase 5: Local Kubernetes (Kind)
 
-**Status:** **In progress** — [P5-001](dev-step-p5-001-kind-cluster.md)–[P5-005](dev-step-p5-005-k8s-dev-docs-exit.md) ([dev-steps index](dev-steps-index.md)). [Phase 5 exit checklist](dev-step-phase5-exit.md).
+**Status:** Complete — [P5-001](dev-step-p5-001-kind-cluster.md)–[P5-005](dev-step-p5-005-k8s-dev-docs-exit.md) merged ([#17](https://github.com/kazusa931209-cmd/Voragon/pull/17)); exit signed off 2026-10-15 — [dev-step-phase5-exit.md](dev-step-phase5-exit.md).
 
 **Goal:** Validate Kubernetes deployment patterns locally.
 
@@ -177,6 +177,8 @@ Desktop (Tauri) → WebSocket → Backend → VAD → ASR → Transcript → Des
 ---
 
 ## Phase 6: AWS EKS
+
+**Status:** **Complete** (signed off **2026-10-16**) — [P6-001](dev-step-p6-001-ecr-image-push.md)–[P6-008](dev-step-p6-008-aws-dev-docs-exit.md) ([dev-steps index](dev-steps-index.md)). [Phase 6 exit checklist](dev-step-phase6-exit.md).
 
 **Goal:** Deploy to production Kubernetes on AWS.
 
@@ -200,6 +202,8 @@ Desktop (Tauri) → WebSocket → Backend → VAD → ASR → Transcript → Des
 ---
 
 ## Phase 7: GPU Inference
+
+**Status:** **Dev-steps complete** (P7-001–P7-008) — [Phase 7 GPU path](../operations/phase7-gpu-path.md) and [exit checklist](dev-step-phase7-exit.md). **Operator exit sign-off** pending on [dev-step-phase7-exit.md](dev-step-phase7-exit.md).
 
 **Goal:** Move ASR inference to GPU nodes for production performance.
 
@@ -311,7 +315,8 @@ Phases 3 and 4 can proceed in parallel after Phase 2 is complete.
 
 ## Recommended Next Step
 
-1. Complete Phase 5 exit sign-off — [dev-step-phase5-exit.md](dev-step-phase5-exit.md); then define Phase 6 dev-steps (EKS).
+1. Implement [P7-001](dev-step-p7-001-gpu-node-pool.md) (EKS GPU node pool) — one dev-step = one commit; branch `dev-step/p7-001-gpu-node-pool`.
+2. Confirm AWS GPU instance quota (g5) in target region before apply.
 
 ## Related Documents
 

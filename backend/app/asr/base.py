@@ -62,4 +62,8 @@ def create_asr_engine(settings: Settings) -> ASREngine:
         from app.asr.mock_asr import MockASREngine
 
         return MockASREngine(settings)
+    if settings.asr_backend == "remote":
+        from app.asr.remote import RemoteASREngine
+
+        return RemoteASREngine(settings)
     raise ValueError(f"Unsupported ASR backend: {settings.asr_backend}")

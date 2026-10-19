@@ -18,6 +18,8 @@ class FasterWhisperEngine:
     def __init__(self, settings: Settings) -> None:
         self._model_name = settings.asr_model
         self._backend = settings.asr_backend
+        self._device = settings.asr_device
+        self._compute_type = settings.asr_compute_type
         self._model = None
         self._ready = False
         self._executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="asr")
@@ -90,7 +92,11 @@ class FasterWhisperEngine:
             ) from exc
 
         logger.info("Loading faster-whisper model: %s", self._model_name)
-        self._model = WhisperModel(self._model_name, device="cpu", compute_type="int8")
+        self._model = WhisperModel(
+            self._model_name,
+            device=self._device,
+            compute_type=self._compute_type,
+        )
 
     def _run_warmup_inference(self) -> None:
         silence = np.zeros(WARMUP_SAMPLE_RATE, dtype=np.float32)

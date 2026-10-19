@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: voragon
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - asr-configmap.yaml
+  - pvc.yaml
+  - asr-pvc.yaml
+  - realtime-deployment.yaml
+  - realtime-service.yaml
+  - asr-deployment.yaml
+  - asr-service.yaml
+
+# Before apply on EKS, set ECR images (see README):
+#   kustomize edit set image "voragon/realtime-backend=${ECR_URI}:${TAG}"
+#   kustomize edit set image "voragon/asr-inference=${ASR_ECR_URI}:${TAG}"
+images:
+  - name: voragon/realtime-backend
+    newName: voragon/realtime-backend
+    newTag: ecr
+  - name: voragon/asr-inference
+    newName: voragon/asr-inference
+    newTag: ecr

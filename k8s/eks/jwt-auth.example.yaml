@@ -1,0 +1,14 @@
+# Example: enable JWT auth on realtime-backend (P6-005).
+# 1. Create secret from infra/apigateway Secrets Manager jwt_secret.
+# 2. kubectl apply -f k8s/eks/jwt-auth.example.yaml
+# 3. Patch deployment env (merge with existing configMapRef):
+#    JWT_AUTH_REQUIRED=true plus envFrom secretRef name=realtime-jwt
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: realtime-jwt
+  namespace: voragon
+type: Opaque
+stringData:
+  JWT_SECRET: "REPLACE_FROM_SECRETS_MANAGER"

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: asr-config
+  namespace: voragon
+  labels:
+    app.kubernetes.io/name: asr-service
+    app.kubernetes.io/part-of: voragon
+data:
+  ASR_MODEL: "tiny"
+  LOG_FORMAT: "json"
+  HOST: "0.0.0.0"
+  PORT: "8081"
+  ASR_BACKEND: "faster_whisper"
+  ASR_DEVICE: "cuda"
+  ASR_COMPUTE_TYPE: "float16"
+  HF_HOME: "/var/lib/voragon/model-cache/huggingface"
+  TORCH_HOME: "/var/lib/voragon/model-cache/torch"

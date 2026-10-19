@@ -14,7 +14,7 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 
 ## Active Step
 
-**P5-001** — [Kind cluster and image load](dev-step-p5-001-kind-cluster.md) (`in-progress`). Phase 4 exit signed off 2026-10-15: [dev-step-phase4-exit.md](dev-step-phase4-exit.md).
+**P8-005** — [AI Gateway fallback routing](dev-step-p8-005-fallback-routing.md) (`in-progress`).
 
 ---
 
@@ -92,18 +92,72 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 
 | ID | Title | Status | PR | Doc |
 |----|-------|--------|-----|-----|
-| P5-001 | Kind cluster and image load | in-progress | — | [dev-step-p5-001-kind-cluster.md](dev-step-p5-001-kind-cluster.md) |
-| P5-002 | Local Kubernetes manifests | in-progress | — | [dev-step-p5-002-local-manifests.md](dev-step-p5-002-local-manifests.md) |
-| P5-003 | Model cache PVC on Kind | in-progress | — | [dev-step-p5-003-model-cache-pvc.md](dev-step-p5-003-model-cache-pvc.md) |
-| P5-004 | Health probes and rolling restart | in-progress | — | [dev-step-p5-004-probes-rolling-restart.md](dev-step-p5-004-probes-rolling-restart.md) |
-| P5-005 | K8s dev docs and Phase 5 exit | in-progress | — | [dev-step-p5-005-k8s-dev-docs-exit.md](dev-step-p5-005-k8s-dev-docs-exit.md) |
+| P5-001 | Kind cluster and image load | done | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) | [dev-step-p5-001-kind-cluster.md](dev-step-p5-001-kind-cluster.md) |
+| P5-002 | Local Kubernetes manifests | done | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) | [dev-step-p5-002-local-manifests.md](dev-step-p5-002-local-manifests.md) |
+| P5-003 | Model cache PVC on Kind | done | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) | [dev-step-p5-003-model-cache-pvc.md](dev-step-p5-003-model-cache-pvc.md) |
+| P5-004 | Health probes and rolling restart | done | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) | [dev-step-p5-004-probes-rolling-restart.md](dev-step-p5-004-probes-rolling-restart.md) |
+| P5-005 | K8s dev docs and Phase 5 exit | done | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) | [dev-step-p5-005-k8s-dev-docs-exit.md](dev-step-p5-005-k8s-dev-docs-exit.md) |
 
 **Suggested order:** P5-001 → P5-002 → P5-003 → P5-004 → P5-005.
 
-**Phase 5 exit:** [dev-step-phase5-exit.md](dev-step-phase5-exit.md) (pending sign-off). See [phases.md](phases.md).
+**Phase 5 exit:** signed off 2026-10-15 — [dev-step-phase5-exit.md](dev-step-phase5-exit.md). Dev-steps [P5-001](dev-step-p5-001-kind-cluster.md)–[P5-005](dev-step-p5-005-k8s-dev-docs-exit.md) done.
 
 ---
 
-## Phase 6+
+## Phase 6: AWS EKS
 
-Dev-steps for Phase 6 (EKS) and beyond — see [phases.md](phases.md).
+| ID | Title | Status | PR | Doc |
+|----|-------|--------|-----|-----|
+| P6-001 | ECR repository and image push | done | [`4f27196`](https://github.com/kazusa931209-cmd/Voragon/commit/4f27196) | [dev-step-p6-001-ecr-image-push.md](dev-step-p6-001-ecr-image-push.md) |
+| P6-002 | EKS cluster and CPU node group | done | — | [dev-step-p6-002-eks-cluster-cpu.md](dev-step-p6-002-eks-cluster-cpu.md) |
+| P6-003 | EKS realtime manifests and deploy | done | [`658bdf8`](https://github.com/kazusa931209-cmd/Voragon/commit/658bdf8) | [dev-step-p6-003-eks-realtime-manifests.md](dev-step-p6-003-eks-realtime-manifests.md) |
+| P6-004 | ALB Ingress for WebSocket | done | [`487ef89`](https://github.com/kazusa931209-cmd/Voragon/commit/487ef89) | [dev-step-p6-004-alb-ingress-websocket.md](dev-step-p6-004-alb-ingress-websocket.md) |
+| P6-005 | API Gateway WebSocket and authentication | done | [`921e438`](https://github.com/kazusa931209-cmd/Voragon/commit/921e438) | [dev-step-p6-005-api-gateway-auth.md](dev-step-p6-005-api-gateway-auth.md) |
+| P6-006 | CloudWatch logging | done | [`e5ffb20`](https://github.com/kazusa931209-cmd/Voragon/commit/e5ffb20) | [dev-step-p6-006-cloudwatch-logging.md](dev-step-p6-006-cloudwatch-logging.md) |
+| P6-007 | DNS and TLS (Route 53 + ACM) | done | — | [dev-step-p6-007-dns-tls.md](dev-step-p6-007-dns-tls.md) |
+| P6-008 | AWS dev docs and Phase 6 exit prep | done | — | [dev-step-p6-008-aws-dev-docs-exit.md](dev-step-p6-008-aws-dev-docs-exit.md) |
+
+**Suggested order:** P6-001 → P6-002 → P6-003 → P6-004 → P6-005 → P6-006 → P6-007 → P6-008 (P6-006 may parallelize after P6-003; P6-007 may overlap P6-004/P6-005 — finish before exit sign-off).
+
+**Phase 6 exit:** signed off **2026-10-16** — [dev-step-phase6-exit.md](dev-step-phase6-exit.md). Dev-steps [P6-001](dev-step-p6-001-ecr-image-push.md)–[P6-008](dev-step-p6-008-aws-dev-docs-exit.md) done.
+
+---
+
+## Phase 7: GPU Inference
+
+| ID | Title | Status | PR | Doc |
+|----|-------|--------|-----|-----|
+| P7-001 | EKS GPU node pool | done | — | [dev-step-p7-001-gpu-node-pool.md](dev-step-p7-001-gpu-node-pool.md) |
+| P7-002 | NVIDIA device plugin | done | — | [dev-step-p7-002-nvidia-device-plugin.md](dev-step-p7-002-nvidia-device-plugin.md) |
+| P7-003 | ASR inference image and ECR | done | — | [dev-step-p7-003-asr-image-ecr.md](dev-step-p7-003-asr-image-ecr.md) |
+| P7-004 | asr-service Deployment on GPU | done | — | [dev-step-p7-004-asr-service-deploy.md](dev-step-p7-004-asr-service-deploy.md) |
+| P7-005 | Model weights on GPU pods | done | — | [dev-step-p7-005-model-weights-gpu.md](dev-step-p7-005-model-weights-gpu.md) |
+| P7-006 | Realtime backend remote ASR | done | — | [dev-step-p7-006-realtime-remote-asr.md](dev-step-p7-006-realtime-remote-asr.md) |
+| P7-007 | GPU utilization metrics | done | — | [dev-step-p7-007-gpu-metrics.md](dev-step-p7-007-gpu-metrics.md) |
+| P7-008 | GPU dev docs and Phase 7 exit prep | done | — | [dev-step-p7-008-gpu-dev-docs-exit.md](dev-step-p7-008-gpu-dev-docs-exit.md) |
+
+**Suggested order:** P7-001 → P7-002 → P7-003 → P7-004 → P7-005 → P7-006 → P7-007 → P7-008 (P7-003 may start in parallel after P7-001; P7-006 requires P7-004 Service reachable).
+
+**Phase 7 exit:** [dev-step-phase7-exit.md](dev-step-phase7-exit.md) — operator E2E sign-off after [phase7-gpu-path.md](../operations/phase7-gpu-path.md). All P7 dev-steps done. See [phases.md](phases.md).
+
+---
+
+## Phase 8: AI Gateway
+
+| ID | Title | Status | PR | Doc |
+|----|-------|--------|-----|-----|
+| P8-001 | AI Gateway service scaffold | done | — | [dev-step-p8-001-ai-gateway-scaffold.md](dev-step-p8-001-ai-gateway-scaffold.md) |
+| P8-002 | AI Gateway model registry | done | — | [dev-step-p8-002-model-registry.md](dev-step-p8-002-model-registry.md) |
+| P8-003 | AI Gateway ASR inference proxy | done | [`bd4d9d2`](https://github.com/kazusa931209-cmd/Voragon/commit/bd4d9d2) | [dev-step-p8-003-asr-inference-proxy.md](dev-step-p8-003-asr-inference-proxy.md) |
+| P8-004 | AI Gateway backend health checks | done | [`0c84221`](https://github.com/kazusa931209-cmd/Voragon/commit/0c84221) | [dev-step-p8-004-backend-health-checks.md](dev-step-p8-004-backend-health-checks.md) |
+| P8-005 | AI Gateway fallback routing | in-progress | — | [dev-step-p8-005-fallback-routing.md](dev-step-p8-005-fallback-routing.md) |
+
+**Suggested order (planned):** P8-001 → P8-002 (model registry) → P8-003 (ASR inference proxy) → P8-004 (backend health checks) → P8-005 (fallback) → P8-006 (realtime routes via gateway) → P8-007 (container image) → P8-008 (Kind/EKS manifests) → P8-009 (gateway metrics) → P8-010 (ops docs + Phase 8 exit).
+
+**Phase 8 exit:** See [phases.md](phases.md) — realtime-service calls AI Gateway, not ASR directly; model changes via config.
+
+---
+
+## Phase 9+
+
+Dev-steps for Phase 9 and beyond — see [phases.md](phases.md).

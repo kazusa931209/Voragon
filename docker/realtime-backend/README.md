@@ -30,6 +30,10 @@ curl -f http://localhost:8000/health
 
 Override server and ASR settings with the same env vars as [backend/.env.example](../../backend/.env.example).
 
+## Push to ECR (Phase 6)
+
+Production/staging images use the same build command as local, then tag and push to AWS ECR. See [infra/ecr/README.md](../../infra/ecr/README.md) (Terraform + `docker push`). Keep the **`local`** tag for Kind and Compose only.
+
 ## Docker Compose (recommended)
 
 From the `docker/` directory (stop any host process already bound to port **8000**):

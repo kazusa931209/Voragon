@@ -34,6 +34,18 @@ ASR_INFERENCE_DURATION = Histogram(
     "ASR inference latency",
     labelnames=("kind",),
 )
+ASR_INFERENCE_ERRORS = Counter(
+    "voragon_asr_inference_errors_total",
+    "ASR inference failures",
+)
+INFERENCE_QUEUE_DEPTH = Gauge(
+    "voragon_inference_queue_depth",
+    "Pending inference requests in the ASR service",
+)
+MODEL_LOAD_DURATION = Gauge(
+    "voragon_model_load_duration_seconds",
+    "Model loading time at startup",
+)
 
 
 async def refresh_gauges() -> None:
@@ -59,6 +71,25 @@ def record_transcript_final() -> None:
 
 def observe_asr_inference_duration(seconds: float, *, kind: str) -> None:
     ASR_INFERENCE_DURATION.labels(kind=kind).observe(seconds)
+
+
+def record_asr_inference_error() -> None:
+    ASR_INFERENCE_ERRORS.inc()
+
+
+def set_inference_queue_depth(depth: int) -> None:
+    INFERENCE_QUEUE_DEPTH.set(depth)
+
+
+def observe_model_load_duration(seconds: float) -> None:
+    MODEL_LOAD_DURATION.set(seconds)
+
+
+async def asr_service_metrics_body() -> bytes:
+    from app.observability.gpu_collector import refresh_gpu_gauges
+
+    refresh_gpu_gauges()
+    return generate_latest()
 
 
 async def metrics_body() -> bytes:

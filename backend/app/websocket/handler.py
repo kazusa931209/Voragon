@@ -11,6 +11,7 @@ from uuid import UUID
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
 from app.asr.base import ASREngine, ASRInferenceError, ASRModelUnavailableError
+from app.auth.jwt import JwtAuthError, require_realtime_jwt
 from app.config import Settings, get_settings
 from app.observability.logging_config import log_fields
 from app.observability.metrics import (
@@ -58,6 +59,27 @@ class RealtimeConnection:
 @router.websocket("/v1/realtime")
 async def realtime_websocket(websocket: WebSocket) -> None:
     settings = get_settings()
+    if settings.jwt_auth_required:
+        secret = settings.jwt_secret
+        if not secret:
+            logger.error("websocket.auth_misconfigured", extra={"reason": "JWT_SECRET missing"})
+            await websocket.close(code=1011, reason="Auth misconfigured")
+            return
+        try:
+            await require_realtime_jwt(
+                websocket,
+                secret=secret,
+                audience=settings.jwt_audience,
+            )
+        except JwtAuthError:
+            log_fields(
+                logger,
+                logging.INFO,
+                "websocket.auth_rejected",
+                reason="invalid_or_missing_token",
+            )
+            await websocket.close(code=4401, reason="Unauthorized")
+            return
     await websocket.accept()
 
     conn = RealtimeConnection(

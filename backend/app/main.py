@@ -40,6 +40,8 @@ async def lifespan(app: FastAPI):
     await asr_engine.warmup()
     app.state.asr_engine = asr_engine
     yield
+    if hasattr(asr_engine, "aclose"):
+        await asr_engine.aclose()
     log_fields(
         logger,
         logging.INFO,

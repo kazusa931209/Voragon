@@ -4,9 +4,9 @@
 |-------|-------|
 | **ID** | P5-004 |
 | **Phase** | 5 |
-| **Status** | in-progress |
-| **Commit** | — |
-| **PR** | — |
+| **Status** | done |
+| **Commit** | [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e) |
+| **PR** | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) |
 | **Branch** | `dev-step/p5-004-probes-rolling-restart` |
 
 ## Spec References
@@ -34,7 +34,7 @@ One verifiable behavior: **Deployment uses HTTP liveness/readiness/startup probe
 - [x] startup/liveness/readiness HTTP probes on `/health` in Deployment
 - [x] RollingUpdate strategy `maxUnavailable: 0`, `maxSurge: 1`
 - [x] Rollout / WebSocket limitations documented in `k8s/README.md`
-- [ ] `kubectl rollout restart` verified on live cluster (operator)
+- [x] `kubectl rollout restart` verified on live cluster (operator)
 
 ## Manual Test
 
@@ -75,8 +75,8 @@ cd backend && pytest -q
 
 ### Manual Test Result
 
-- [ ] Pass — pending Kind E2E
+- [x] Pass — 2026-10-15 (`rollout restart`, health OK after port-forward)
 
 ### Commit
 
-- **Hash:** —
+- **Hash:** [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e)

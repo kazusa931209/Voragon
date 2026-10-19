@@ -116,7 +116,7 @@ Implementations:
 | `whisper_cpp` | Local dev on Apple Silicon | Phase 1 |
 | `gateway` | Production via AI Gateway | Phase 7–8 |
 
-The active adapter is selected via configuration (`ASR_BACKEND=faster_whisper|whisper_cpp|gateway`).
+The active adapter is selected via configuration (`ASR_BACKEND=faster_whisper|mock|remote`). **P7-006:** `remote` calls in-cluster `asr-service` at `ASR_REMOTE_BASE_URL` (`POST /v1/inference/asr`); EKS `realtime-config` uses remote ASR while Compose/Kind stay in-process.
 
 See [Model Serving](model-serving.md) for implementation trade-offs.
 
@@ -182,8 +182,9 @@ See [Realtime WebSocket API](../api/realtime-websocket.md) and [AI Gateway](ai-g
 |----------|---------|-------------|
 | `HOST` | `0.0.0.0` | Bind address |
 | `PORT` | `8000` | Bind port |
-| `ASR_BACKEND` | `faster_whisper` | ASR adapter selection |
+| `ASR_BACKEND` | `faster_whisper` | ASR adapter selection (`mock`, `remote` for tests/EKS) |
 | `ASR_MODEL` | `large-v3-turbo` | Model identifier |
+| `ASR_REMOTE_BASE_URL` | `http://asr-service:8081` | Remote ASR service base URL when `ASR_BACKEND=remote` |
 | `VAD_BACKEND` | `silero` | VAD implementation |
 | `AI_GATEWAY_URL` | — | AI Gateway URL (production only) |
 | `HEARTBEAT_IDLE_TIMEOUT_S` | `45` | Close WebSocket when no inbound message for this duration |

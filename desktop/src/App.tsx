@@ -3,6 +3,7 @@ import { listen } from "@tauri-apps/api/event";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { errorCode, isRecoverableError, type MessageEnvelope } from "./api/messages";
 import { pcmFromEventPayload } from "./api/frames";
+import { fetchAccessToken } from "./api/authToken";
 import { RealtimeClient, type ConnectionState } from "./api/realtimeClient";
 import { ConnectionStatus } from "./components/ConnectionStatus";
 import { TranscriptPanel } from "./components/TranscriptPanel";
@@ -21,6 +22,8 @@ interface AudioDevice {
 function App() {
   const [settings, setSettings] = useState<AppSettings>({
     backendUrl: DEFAULT_BACKEND_URL,
+    authTokenUrl: "",
+    authMintApiKey: "",
     inputDeviceIndex: null,
     language: "en",
   });
@@ -87,16 +90,33 @@ function App() {
       return existing;
     }
     existing?.disconnect();
-    const client = new RealtimeClient(settings.backendUrl, settings.language, {
-      onStateChange: onConnectionStateChange,
-      onSessionId: (id) => setSessionId(id || null),
-      onMessage: onServerMessage,
-      onNotice: (text) => setNotice(text),
-    });
+    let accessToken: string | null = null;
+    const tokenUrl = settings.authTokenUrl.trim();
+    if (tokenUrl) {
+      accessToken = await fetchAccessToken(tokenUrl, settings.authMintApiKey);
+    }
+    const client = new RealtimeClient(
+      settings.backendUrl,
+      settings.language,
+      {
+        onStateChange: onConnectionStateChange,
+        onSessionId: (id) => setSessionId(id || null),
+        onMessage: onServerMessage,
+        onNotice: (text) => setNotice(text),
+      },
+      { accessToken },
+    );
     clientRef.current = client;
     await client.connect();
     return client;
-  }, [onConnectionStateChange, onServerMessage, settings.backendUrl, settings.language]);
+  }, [
+    onConnectionStateChange,
+    onServerMessage,
+    settings.authMintApiKey,
+    settings.authTokenUrl,
+    settings.backendUrl,
+    settings.language,
+  ]);
 
   const connect = useCallback(async () => {
     setNotice(null);
@@ -256,6 +276,24 @@ function App() {
             type="url"
             value={settings.backendUrl}
             onChange={(e) => setSettings((s) => ({ ...s, backendUrl: e.target.value }))}
+          />
+        </label>
+        <label>
+          Auth token URL (optional)
+          <input
+            type="url"
+            placeholder="https://…/staging/v1/auth/token"
+            value={settings.authTokenUrl}
+            onChange={(e) => setSettings((s) => ({ ...s, authTokenUrl: e.target.value }))}
+          />
+        </label>
+        <label>
+          Mint API key (optional)
+          <input
+            type="password"
+            autoComplete="off"
+            value={settings.authMintApiKey}
+            onChange={(e) => setSettings((s) => ({ ...s, authMintApiKey: e.target.value }))}
           />
         </label>
         <label>

@@ -4,7 +4,7 @@
 
 Local development for Voragon: **desktop on the host**, **backend** either in Docker (recommended for reproducibility) or a Python venv. No cloud dependencies.
 
-**Status:** Implemented — Phase 3 desktop ([Phase 3 exit](../roadmap/dev-step-phase3-exit.md)); Phase 4 Docker backend ([docker/README.md](../../docker/README.md), [Phase 4 exit](../roadmap/dev-step-phase4-exit.md)); Phase 5 Kind ([k8s/README.md](../../k8s/README.md), [Phase 5 exit](../roadmap/dev-step-phase5-exit.md)).
+**Status:** Implemented — Phase 3 desktop ([Phase 3 exit](../roadmap/dev-step-phase3-exit.md)); Phase 4 Docker backend ([docker/README.md](../../docker/README.md), [Phase 4 exit](../roadmap/dev-step-phase4-exit.md)); Phase 5 Kind ([k8s/README.md](../../k8s/README.md), [Phase 5 exit](../roadmap/dev-step-phase5-exit.md)). **Phase 6 AWS EKS staging:** [aws-deployment.md](aws-deployment.md) (full contributor path); desktop production connect: [desktop/README.md](../../desktop/README.md#production-aws-staging).
 
 ## Prerequisites
 
@@ -94,6 +94,29 @@ cd desktop && pnpm tauri dev
 ```
 
 Quick reference: [k8s/README.md](../../k8s/README.md). Same WebSocket URL: `ws://localhost:8000/v1/realtime`.
+
+### AWS EKS staging (Phase 6)
+
+Use when validating the production-like path (ALB, JWT, TLS, CloudWatch) — not for day-to-day app development.
+
+1. Follow [aws-deployment.md](aws-deployment.md) contributor path (ECR → EKS → ALB → API Gateway → DNS).
+2. Configure the desktop for `wss://<api-host>/v1/realtime` plus auth — [desktop/README.md](../../desktop/README.md#production-aws-staging).
+3. Complete [Phase 6 exit](../roadmap/dev-step-phase6-exit.md) checklist when signing off staging.
+
+Requires AWS account credentials, Terraform, and kubectl. No port-forward; traffic uses the public ALB hostname or custom API DNS.
+
+### Compose vs Kind vs EKS
+
+| | Docker Compose | Kind (Phase 5) | AWS EKS (Phase 6) |
+|--|----------------|----------------|-------------------|
+| **When** | Default local backend | K8s manifest / probe validation | Staging / production CPU path |
+| **Backend URL** | `ws://localhost:8000/v1/realtime` | Port-forward → same localhost URL | `wss://<api-host>/v1/realtime` |
+| **Auth** | None | None | JWT via API Gateway ([P6-005](../../infra/apigateway/README.md)) |
+| **Manifests** | [docker/](../../docker/) | [k8s/local/](../../k8s/local/) | [k8s/eks/](../../k8s/eks/) |
+| **Image** | Local build | `kind load` | [ECR push](../../infra/ecr/README.md) |
+| **Guide** | [docker/README.md](../../docker/README.md) | [k8s/README.md](../../k8s/README.md) | [aws-deployment.md](aws-deployment.md) |
+
+Kind vs EKS manifest differences: [kubernetes-local.md](kubernetes-local.md#kind-vs-eks-manifests).
 
 ### Alternative: bare-metal backend
 
@@ -251,6 +274,7 @@ cd desktop && pnpm test
 
 ## Related Documents
 
+- [AWS Deployment (Phase 6)](aws-deployment.md)
 - [Docker Compose Setup](docker.md)
 - [Backend Architecture](../architecture/backend.md)
 - [Desktop Architecture](../architecture/desktop.md)

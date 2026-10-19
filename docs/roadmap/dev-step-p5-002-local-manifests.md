@@ -4,9 +4,9 @@
 |-------|-------|
 | **ID** | P5-002 |
 | **Phase** | 5 |
-| **Status** | in-progress |
-| **Commit** | — |
-| **PR** | — |
+| **Status** | done |
+| **Commit** | [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e) |
+| **PR** | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) |
 | **Branch** | `dev-step/p5-002-local-manifests` |
 
 ## Spec References
@@ -32,8 +32,8 @@ One verifiable behavior: **`kubectl apply -f k8s/local/` deploys realtime-backen
 ## Acceptance Criteria
 
 - [x] Manifests under `k8s/local/` for namespace, configmap, deployment, service
-- [ ] After P5-001 image load, `kubectl apply -f k8s/local/` succeeds (operator)
-- [ ] Pod **Ready** after ASR warmup (operator)
+- [x] After P5-001 image load, `kubectl apply -f k8s/local/` succeeds (operator)
+- [x] Pod **Ready** after ASR warmup (operator)
 - [x] Service `realtime-service` ClusterIP :8000 defined in manifests
 
 ## Manual Test
@@ -75,8 +75,8 @@ cd desktop && pnpm test  # 14 passed (2026-10-15)
 
 ### Manual Test Result
 
-- [ ] Pass — pending Kind cluster apply (see P5-001 manual)
+- [x] Pass — 2026-10-15 (apply, Ready pod, `/health` via port-forward)
 
 ### Commit
 
-- **Hash:** —
+- **Hash:** [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e)

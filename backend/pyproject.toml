@@ -10,20 +10,22 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.115.0",
+    "httpx>=0.28.0",
     "faster-whisper>=1.1.0",
     "numpy>=1.26.0",
     "onnxruntime>=1.17.0",
     "prometheus-client>=0.21.0",
     "pydantic-settings>=2.6.0",
+    "pyyaml>=6.0.0",
     "silero-vad>=5.1.0",
     "torch>=2.2.0",
     "torchaudio>=2.2.0",
     "uvicorn[standard]>=0.32.0",
+    "PyJWT>=2.9.0",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "httpx>=0.28.0",
     "pytest>=8.3.0",
     "pytest-asyncio>=0.24.0",
 ]

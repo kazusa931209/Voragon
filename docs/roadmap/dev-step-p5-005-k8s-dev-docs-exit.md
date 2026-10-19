@@ -4,9 +4,9 @@
 |-------|-------|
 | **ID** | P5-005 |
 | **Phase** | 5 |
-| **Status** | in-progress |
-| **Commit** | — |
-| **PR** | — |
+| **Status** | done |
+| **Commit** | [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e) |
+| **PR** | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) |
 | **Branch** | `dev-step/p5-005-k8s-dev-docs-exit` |
 
 ## Spec References
@@ -35,7 +35,7 @@ One verifiable behavior: **documentation describes the Kind dev loop; desktop E2
 - [x] [k8s/README.md](../../k8s/README.md) contributor path (Kind → apply → port-forward)
 - [x] [dev-step-phase5-exit.md](dev-step-phase5-exit.md) checklist
 - [x] Compose vs Kind guidance in docs
-- [ ] Desktop speak E2E vs Kind (operator sign-off on phase5 exit)
+- [x] Desktop speak E2E vs Kind (operator sign-off on phase5 exit)
 
 ## Manual Test
 
@@ -76,8 +76,8 @@ cd desktop && pnpm test  # 14 passed (2026-10-15)
 
 ### Manual Test Result
 
-- [ ] Pass — pending [Phase 5 exit](dev-step-phase5-exit.md) sign-off
+- [x] Pass — 2026-10-15 ([Phase 5 exit](dev-step-phase5-exit.md) signed off)
 
 ### Commit
 
-- **Hash:** —
+- **Hash:** [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e)

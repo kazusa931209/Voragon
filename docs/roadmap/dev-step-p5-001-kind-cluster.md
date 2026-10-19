@@ -4,9 +4,9 @@
 |-------|-------|
 | **ID** | P5-001 |
 | **Phase** | 5 |
-| **Status** | in-progress |
-| **Commit** | — |
-| **PR** | — |
+| **Status** | done |
+| **Commit** | [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e) |
+| **PR** | [#17](https://github.com/kazusa931209-cmd/Voragon/pull/17) |
 | **Branch** | `dev-step/p5-001-kind-cluster` |
 
 ## Spec References
@@ -78,11 +78,11 @@ cd backend && pytest -q
 
 ### Manual Test Result
 
-- [ ] Pass — operator: Kind cluster create + image load (agent: `kindest/node` pull did not finish in session)
+- [x] Pass — 2026-10-15 (Kind create, image build/load, `kubectl cluster-info`)
 
 ### Commit
 
-- **Hash:** —
+- **Hash:** [`8ce4b3e`](https://github.com/kazusa931209-cmd/Voragon/commit/8ce4b3e)
 
 ### PR
 

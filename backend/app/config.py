@@ -1,6 +1,9 @@
 from typing import Literal
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from app.ai_gateway.registry import DEFAULT_REGISTRY_PATH
 
 
 class Settings(BaseSettings):
@@ -10,6 +13,14 @@ class Settings(BaseSettings):
 
     host: str = "0.0.0.0"
     port: int = 8000
+    ai_gateway_port: int = 8080
+    ai_gateway_registry_path: str = Field(default_factory=lambda: str(DEFAULT_REGISTRY_PATH))
+    ai_gateway_upstream_timeout_s: float = 120.0
+    ai_gateway_health_checks_enabled: bool = True
+    ai_gateway_health_check_interval_s: float = 30.0
+    ai_gateway_health_check_timeout_s: float = 5.0
+    ai_gateway_health_failure_threshold: int = 3
+    ai_gateway_health_recovery_threshold: int = 2
     log_level: str = "info"
     log_format: Literal["console", "json"] = "console"
     reconnect_window_s: int = 30
@@ -25,7 +36,14 @@ class Settings(BaseSettings):
     vad_speech_pad_ms: int = 300
     asr_backend: str = "faster_whisper"
     asr_model: str = "large-v3-turbo"
+    asr_device: str = "cpu"
+    asr_compute_type: str = "int8"
     asr_partial_interval_ms: int = 300
+    asr_remote_base_url: str = "http://asr-service:8081"
+    asr_remote_timeout_s: float = 120.0
+    jwt_auth_required: bool = False
+    jwt_secret: str | None = None
+    jwt_audience: str = "voragon-realtime"
 
 
 def get_settings() -> Settings:

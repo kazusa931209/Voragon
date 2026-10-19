@@ -17,6 +17,19 @@ Kind is used to validate:
 
 Kind is **not** used for performance testing or GPU inference validation.
 
+## Kind vs EKS manifests
+
+| | Kind | EKS (P6-003+) |
+|--|------|----------------|
+| Path | [k8s/local/](../../k8s/local/) | [k8s/eks/](../../k8s/eks/) |
+| Docs | [k8s/README.md](../../k8s/README.md) | [k8s/eks/README.md](../../k8s/eks/README.md) |
+| Image | Local Docker + `kind load` | ECR ([infra/ecr](../../infra/ecr/README.md)) |
+| GPU `asr-service` | Not deployed (no GPU in Kind) | [P7-004](../../roadmap/dev-step-p7-004-asr-service-deploy.md) manifests in `k8s/eks/` |
+
+Same probes, ConfigMap env, and model-cache PVC pattern for **realtime-backend**; EKS uses `gp2` storage class and Kustomize for image URIs. Standalone **`asr-service` on GPU nodes is EKS-only** ([k8s/eks/gpu/README.md](../../k8s/eks/gpu/README.md)).
+
+Three-way comparison (Compose vs Kind vs EKS): [local-development.md — Compose vs Kind vs EKS](local-development.md#compose-vs-kind-vs-eks).
+
 ## Architecture (Phase 5 MVP)
 
 Single pod — same topology as Docker Compose (ASR in-process). A separate `asr-service` appears in production/EKS when the sidecar split exists (Phase 7+).
@@ -74,7 +87,7 @@ k8s/
     └── realtime-service.yaml
 ```
 
-Production manifests under `k8s/production/` are Phase 6+.
+EKS staging manifests: [k8s/eks/](../../k8s/eks/) (P6-003+).
 
 ## Differences from Production EKS
 

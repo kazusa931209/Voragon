@@ -39,7 +39,8 @@ See [`.env.example`](.env.example) for all settings. Common overrides:
 | `PORT` | `8000` | Bind port |
 | `LOG_LEVEL` | `info` | Logging level |
 | `LOG_FORMAT` | `console` | `console` or `json` (structured JSON to stdout) |
-| `ASR_BACKEND` | `faster_whisper` | ASR adapter (`faster_whisper`, `mock`) |
+| `ASR_BACKEND` | `faster_whisper` | ASR adapter (`faster_whisper`, `mock`, `remote`) |
+| `ASR_REMOTE_BASE_URL` | `http://asr-service:8081` | Remote ASR base URL when `ASR_BACKEND=remote` |
 | `ASR_MODEL` | `large-v3-turbo` | Whisper model id (e.g. `tiny`, `base`, `large-v3-turbo`) |
 
 ## Health Check

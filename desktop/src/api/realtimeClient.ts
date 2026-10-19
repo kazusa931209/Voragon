@@ -1,3 +1,4 @@
+import { appendAccessToken } from "./wsUrl";
 import { buildAudioFrame } from "./frames";
 import {
   buildControlMessage,
@@ -24,9 +25,14 @@ const PING_INTERVAL_MS = 15_000;
 const SESSION_RESUME_CODES = new Set(["SESSION_NOT_FOUND", "SESSION_EXPIRED"]);
 const RECONNECT_BACKOFF_MS = [1000, 2000, 4000, 8000];
 
+export interface RealtimeClientOptions {
+  accessToken?: string | null;
+}
+
 export class RealtimeClient {
   private ws: WebSocket | null = null;
   private url: string;
+  private accessToken: string | null;
   private language: string;
   private callbacks: RealtimeClientCallbacks;
   private sessionId: string | null = null;
@@ -43,8 +49,14 @@ export class RealtimeClient {
   /** Server closes the WebSocket after session.ended (e.g. audio.stop); do not auto-resume. */
   private suppressReconnectOnClose = false;
 
-  constructor(url: string, language: string, callbacks: RealtimeClientCallbacks) {
+  constructor(
+    url: string,
+    language: string,
+    callbacks: RealtimeClientCallbacks,
+    options?: RealtimeClientOptions,
+  ) {
     this.url = url;
+    this.accessToken = options?.accessToken ?? null;
     this.language = language;
     this.callbacks = callbacks;
   }
@@ -145,7 +157,11 @@ export class RealtimeClient {
 
     try {
       await new Promise<void>((resolve, reject) => {
-        const ws = new WebSocket(this.url);
+        const connectUrl =
+          this.accessToken != null && this.accessToken !== ""
+            ? appendAccessToken(this.url, this.accessToken)
+            : this.url;
+        const ws = new WebSocket(connectUrl);
         ws.binaryType = "arraybuffer";
         this.ws = ws;
 
