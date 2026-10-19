@@ -8,10 +8,10 @@
 
 ## Exit Criteria ([phases.md](phases.md))
 
-- [ ] ASR inference runs on GPU
-- [ ] Inference latency measured and recorded (engineering targets in [observability.md](../operations/observability.md))
-- [ ] GPU metrics visible in dashboards or documented scrape path ([P7-007](dev-step-p7-007-gpu-metrics.md))
-- [ ] Horizontal scaling of ASR pods works (second replica or HPA smoke — see [PVC note](../operations/phase7-gpu-path.md#scaling-smoke-operator))
+- [x] ASR inference runs on GPU
+- [x] Inference latency measured and recorded (engineering targets in [observability.md](../operations/observability.md))
+- [x] GPU metrics visible in dashboards or documented scrape path ([P7-007](dev-step-p7-007-gpu-metrics.md))
+- [x] Horizontal scaling of ASR pods works (second replica or HPA smoke — see [PVC note](../operations/phase7-gpu-path.md#scaling-smoke-operator))
 
 ## Prerequisites
 
@@ -30,12 +30,12 @@ P7-001–P7-007 implemented in repo. Follow [Phase 7 end-to-end (GPU)](../operat
 
 ## Manual Checklist
 
-- [ ] GPU nodes Ready with device plugin ([k8s/eks/gpu/README.md](../../k8s/eks/gpu/README.md))
-- [ ] `asr-service` on GPU; `realtime-service` uses remote ASR (`ASR_BACKEND=remote`)
-- [ ] Desktop or CLI E2E: partials/finals via production/staging path (`wss://<api-host>/v1/realtime`)
-- [ ] Metrics show GPU activity during transcription (`voragon_gpu_utilization` on asr-service)
-- [ ] Rollout restart of asr-service; client recovery acceptable
-- [ ] Latency notes recorded (p50/p95 from `voragon_asr_inference_duration_seconds` or client timing)
+- [x] GPU nodes Ready with device plugin ([k8s/eks/gpu/README.md](../../k8s/eks/gpu/README.md))
+- [x] `asr-service` on GPU; `realtime-service` uses remote ASR (`ASR_BACKEND=remote`)
+- [x] Desktop or CLI E2E: partials/finals via production/staging path (`wss://<api-host>/v1/realtime`)
+- [x] Metrics show GPU activity during transcription (`voragon_gpu_utilization` on asr-service)
+- [x] Rollout restart of asr-service; client recovery acceptable
+- [x] Latency notes recorded (p50/p95 from `voragon_asr_inference_duration_seconds` or client timing)
 
 ## Automated Tests (agent / CI)
 
