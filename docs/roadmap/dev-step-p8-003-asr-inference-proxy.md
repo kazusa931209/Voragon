@@ -17,7 +17,7 @@
 
 ## Scope
 
-One verifiable behavior: **`POST /v1/inference/asr` resolves `capability` via the registry and forwards to the model endpoint (asr-service contract); response includes resolved `model` and `latency_ms`.**
+One verifiable behavior: `POST /v1/inference/asr` **resolves** `capability` **via the registry and forwards to the model endpoint (asr-service contract); response includes resolved** `model` **and** `latency_ms`**.**
 
 - Gateway request: `capability`, `audio` (base64 PCM), `language`, `segment_id`, `is_final`
 - Upstream: existing `AsrInferenceRequest` (`kind`, `audio_base64`, …)
@@ -72,9 +72,9 @@ cd backend && pytest -q tests/test_ai_gateway_asr_proxy.py
 
 ### Manual Test Result
 
-- [ ] Pass — pending operator curl against real asr-service
+- [x] Pass — 2026-10-19; curl against real asr-service
 
 ### Commit
 
-- **Hash:** —
-- **Message:** —
+- **Hash:** `bd4d9d2`
+- **Message:** Phase 8 AI Gateway: registry and ASR inference proxy

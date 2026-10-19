@@ -36,12 +36,12 @@ kubectl wait -n voragon --for=condition=ready pod -l app=asr-service --timeout=9
 
 First startup may take several minutes (ASR warmup + model download into PVC). GPU `asr-service` pods schedule only on nodes with `node-type=gpu` ([gpu/README.md](gpu/README.md)).
 
-**P7-006:** `realtime-config` sets `ASR_BACKEND=remote` and `ASR_REMOTE_BASE_URL=http://asr-service:8081` so CPU `realtime-backend` calls GPU inference over HTTP. Kind/Compose keep in-process ASR (`k8s/local/`, Docker Compose).
+**P7-006 / P8-006:** `realtime-config` sets `ASR_BACKEND=remote`, `ASR_REMOTE_VIA_AI_GATEWAY=true`, and `ASR_REMOTE_BASE_URL=http://ai-gateway:8080` so CPU `realtime-backend` transcribes via the AI Gateway (not direct `asr-service`). Requires `ai-gateway` Deployment (P8-008). Kind/Compose keep in-process ASR (`k8s/local/`, Docker Compose).
 
-Verify remote path:
+Verify gateway path (after ai-gateway is deployed):
 
 ```bash
-kubectl exec -n voragon deploy/realtime-backend -- curl -sf http://asr-service:8081/health
+kubectl exec -n voragon deploy/realtime-backend -- curl -sf http://ai-gateway:8080/health
 ```
 
 Degraded behavior when ASR is down:

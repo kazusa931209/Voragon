@@ -4,8 +4,8 @@
 |-------|-------|
 | **ID** | P8-005 |
 | **Phase** | 8 |
-| **Status** | in-progress |
-| **Commit** | — |
+| **Status** | done |
+| **Commit** | `23e2278` |
 | **PR** | — |
 | **Branch** | `dev-step/p8-005-fallback-routing` |
 
@@ -16,7 +16,7 @@
 
 ## Scope
 
-One verifiable behavior: **when the primary model for a capability is not routable, `POST /v1/inference/asr` tries configured fallback model(s); 503 only if all candidates fail.**
+One verifiable behavior: **when the primary model for a capability is not routable,** `POST /v1/inference/asr` **tries configured fallback model(s); 503 only if all candidates fail.**
 
 - Registry `routing` section: `primary` + ordered `fallback` model ids per capability
 - Default registry unchanged (single model; auto routing from capabilities)
@@ -68,9 +68,9 @@ cd backend && pytest -q tests/test_ai_gateway_fallback.py tests/test_ai_gateway_
 
 ### Manual Test Result
 
-- [ ] Pass — pending operator
+- [x] Pass — 2026-10-19; primary stopped, inference via fallback
 
 ### Commit
 
-- **Hash:** —
-- **Message:** —
+- **Hash:** `23e2278`
+- **Message:** [P8-005] AI Gateway fallback routing for ASR inference

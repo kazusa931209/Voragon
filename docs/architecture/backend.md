@@ -116,7 +116,7 @@ Implementations:
 | `whisper_cpp` | Local dev on Apple Silicon | Phase 1 |
 | `gateway` | Production via AI Gateway | Phase 7–8 |
 
-The active adapter is selected via configuration (`ASR_BACKEND=faster_whisper|mock|remote`). **P7-006:** `remote` calls in-cluster `asr-service` at `ASR_REMOTE_BASE_URL` (`POST /v1/inference/asr`); EKS `realtime-config` uses remote ASR while Compose/Kind stay in-process.
+The active adapter is selected via configuration (`ASR_BACKEND=faster_whisper|mock|remote`). **P7-006:** `remote` calls HTTP ASR at `ASR_REMOTE_BASE_URL`. **P8-006:** on EKS, set `ASR_REMOTE_VIA_AI_GATEWAY=true` and point `ASR_REMOTE_BASE_URL` at `ai-gateway` (capability `ASR_CAPABILITY`, default `asr.default`); Compose/Kind stay in-process or direct asr-service until gateway manifests land (P8-008).
 
 See [Model Serving](model-serving.md) for implementation trade-offs.
 
@@ -184,9 +184,10 @@ See [Realtime WebSocket API](../api/realtime-websocket.md) and [AI Gateway](ai-g
 | `PORT` | `8000` | Bind port |
 | `ASR_BACKEND` | `faster_whisper` | ASR adapter selection (`mock`, `remote` for tests/EKS) |
 | `ASR_MODEL` | `large-v3-turbo` | Model identifier |
-| `ASR_REMOTE_BASE_URL` | `http://asr-service:8081` | Remote ASR service base URL when `ASR_BACKEND=remote` |
+| `ASR_REMOTE_BASE_URL` | `http://asr-service:8081` | Remote HTTP base URL when `ASR_BACKEND=remote` (EKS: `http://ai-gateway:8080`) |
+| `ASR_REMOTE_VIA_AI_GATEWAY` | `false` | Use AI Gateway inference API (`capability` + `audio`) instead of asr-service payload |
+| `ASR_CAPABILITY` | `asr.default` | Capability alias when `ASR_REMOTE_VIA_AI_GATEWAY=true` |
 | `VAD_BACKEND` | `silero` | VAD implementation |
-| `AI_GATEWAY_URL` | — | AI Gateway URL (production only) |
 | `HEARTBEAT_IDLE_TIMEOUT_S` | `45` | Close WebSocket when no inbound message for this duration |
 | `RECONNECT_WINDOW_S` | `30` | Session state retention after disconnect (P2-005+) |
 | `LOG_LEVEL` | `info` | Logging level |

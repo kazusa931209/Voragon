@@ -40,6 +40,8 @@ class Settings(BaseSettings):
     asr_compute_type: str = "int8"
     asr_partial_interval_ms: int = 300
     asr_remote_base_url: str = "http://asr-service:8081"
+    asr_remote_via_ai_gateway: bool = False
+    asr_capability: str = "asr.default"
     asr_remote_timeout_s: float = 120.0
     jwt_auth_required: bool = False
     jwt_secret: str | None = None

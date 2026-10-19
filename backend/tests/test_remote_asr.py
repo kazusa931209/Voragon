@@ -99,6 +99,83 @@ async def test_remote_asr_inference_error_on_http_502(remote_settings: Settings)
             await engine.transcribe_final(b"\x00" * MIN_AUDIO_BYTES_FOR_TEXT, "seg", "en")
 
 
+def _build_mock_ai_gateway() -> FastAPI:
+    app = FastAPI()
+
+    @app.get("/health")
+    async def health() -> dict[str, object]:
+        return {"status": "healthy", "service": "voragon-ai-gateway", "models_routable": True}
+
+    @app.post("/v1/inference/asr")
+    async def infer(payload: dict[str, object]) -> dict[str, object]:
+        segment_id = str(payload.get("segment_id", ""))
+        is_final = bool(payload.get("is_final"))
+        assert payload.get("capability") == "asr.default"
+        assert "audio" in payload
+        kind = "final" if is_final else "partial"
+        return {
+            "text": f"{kind}-{segment_id}",
+            "segment_id": segment_id,
+            "is_final": is_final,
+            "language": payload.get("language", "en"),
+            "confidence": 0.9,
+            "model": "whisper-large-v3-turbo",
+            "latency_ms": 12,
+        }
+
+    return app
+
+
+async def test_remote_asr_via_ai_gateway_end_to_end() -> None:
+    settings = Settings(
+        asr_backend="remote",
+        asr_model="large-v3-turbo",
+        asr_remote_base_url="http://ai-gateway.test",
+        asr_remote_via_ai_gateway=True,
+        asr_capability="asr.default",
+    )
+    mock_app = _build_mock_ai_gateway()
+    transport = ASGITransport(app=mock_app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://ai-gateway.test") as client:
+        engine = RemoteASREngine(settings, client=client)
+        await engine.warmup()
+        health = await engine.health()
+        assert health.backend == "remote-ai-gateway"
+        assert health.ready is True
+
+        audio = b"\x00" * MIN_AUDIO_BYTES_FOR_TEXT
+        partial = await engine.transcribe_partial(audio, "seg-gw", "en")
+        final = await engine.transcribe_final(audio, "seg-gw", "en")
+
+    assert partial.text == "partial-seg-gw"
+    assert final.text == "final-seg-gw"
+
+
+async def test_remote_asr_via_ai_gateway_unhealthy_on_503() -> None:
+    settings = Settings(
+        asr_backend="remote",
+        asr_remote_base_url="http://ai-gateway.test",
+        asr_remote_via_ai_gateway=True,
+    )
+    app = FastAPI()
+
+    @app.get("/health")
+    async def health() -> None:
+        from fastapi import Response
+
+        return Response(
+            status_code=503,
+            content='{"status":"degraded","models_routable":false}',
+            media_type="application/json",
+        )
+
+    transport = ASGITransport(app=app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://ai-gateway.test") as client:
+        engine = RemoteASREngine(settings, client=client)
+        with pytest.raises(ASRModelUnavailableError):
+            await engine.warmup()
+
+
 async def test_asr_inference_http_route_with_test_client() -> None:
     from fastapi.testclient import TestClient
 
