@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ai-gateway-config
+  namespace: voragon
+  labels:
+    app.kubernetes.io/name: ai-gateway
+    app.kubernetes.io/part-of: voragon
+data:
+  registry.yaml: |
+    models:
+      whisper-large-v3-turbo:
+        type: asr
+        endpoint: http://asr-service:8081
+        capabilities:
+          - asr.default
+        version: "1.0"
+        languages:
+          - en
+        health_check_interval_s: 30

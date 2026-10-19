@@ -4,8 +4,8 @@
 |-------|-------|
 | **ID** | P8-007 |
 | **Phase** | 8 |
-| **Status** | in-progress |
-| **Commit** | — |
+| **Status** | done |
+| **Commit** | `6559a795` |
 | **PR** | — |
 | **Branch** | `dev-step/p8-007-ai-gateway-image` |
 
@@ -34,7 +34,7 @@ One verifiable behavior: `voragon/ai-gateway` **image builds from** `docker/ai-g
 
 - [x] `docker build -f docker/ai-gateway/Dockerfile` succeeds
 - [x] pytest Dockerfile + ECR Terraform contract tests pass
-- [ ] Operator smoke: `docker run` + `curl /health` per README
+- [x] Operator smoke: `docker run` + `curl /health` per README
 
 ## Manual Test
 
@@ -74,9 +74,9 @@ cd backend && pytest -q tests/test_ai_gateway_dockerfile.py tests/test_ecr_ai_ga
 
 ### Manual Test Result
 
-- [x] Pass — date, notes
+- [x] Pass — 2026-10-19; docker run + curl /health
 
 ### Commit
 
-- **Hash:** —
-- **Message:** —
+- **Hash:** `6559a795`
+- **Message:** [P8-007] AI Gateway container image

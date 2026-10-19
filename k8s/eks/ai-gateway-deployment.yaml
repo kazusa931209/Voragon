@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-gateway
+  namespace: voragon
+  labels:
+    app.kubernetes.io/name: ai-gateway
+    app.kubernetes.io/part-of: voragon
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ai-gateway
+  template:
+    metadata:
+      labels:
+        app: ai-gateway
+        app.kubernetes.io/name: ai-gateway
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: ai-gateway
+          image: voragon/ai-gateway:ecr
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: AI_GATEWAY_PORT
+              value: "8080"
+            - name: AI_GATEWAY_REGISTRY_PATH
+              value: /config/registry.yaml
+            - name: LOG_FORMAT
+              value: json
+          volumeMounts:
+            - name: registry
+              mountPath: /config
+              readOnly: true
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+      volumes:
+        - name: registry
+          configMap:
+            name: ai-gateway-config
