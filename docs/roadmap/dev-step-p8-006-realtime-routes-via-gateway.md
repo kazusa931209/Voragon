@@ -4,8 +4,8 @@
 |-------|-------|
 | **ID** | P8-006 |
 | **Phase** | 8 |
-| **Status** | in-progress |
-| **Commit** | — |
+| **Status** | done |
+| **Commit** | `da2e19e5` |
 | **PR** | — |
 | **Branch** | `dev-step/p8-006-realtime-routes-via-gateway` |
 
@@ -18,7 +18,7 @@
 
 ## Scope
 
-One verifiable behavior: **when configured for production/EKS, realtime-service transcribes via the AI Gateway (`POST /v1/inference/asr` with `capability`), not direct asr-service HTTP; WebSocket partial/final behavior unchanged for clients.**
+One verifiable behavior: **when configured for production/EKS, realtime-service transcribes via the AI Gateway (**`POST /v1/inference/asr` **with** `capability`**), not direct asr-service HTTP; WebSocket partial/final behavior unchanged for clients.**
 
 - Env/config to select gateway base URL (e.g. `http://ai-gateway:8080`) and default capability (`asr.default`)
 - Remote adapter (or dedicated path) uses gateway request/response shape; health/warmup aligned with gateway `/health` or documented probe
@@ -36,7 +36,7 @@ One verifiable behavior: **when configured for production/EKS, realtime-service 
 
 - [x] pytest covers gateway-backed remote ASR (mock gateway or contract test)
 - [x] EKS config documents `ASR_REMOTE_BASE_URL` → ai-gateway; test asserts manifest/env
-- [ ] Operator E2E: realtime partials/finals with gateway in path (health + fallback inherited from gateway)
+- [x] Operator E2E: realtime partials/finals with gateway in path (health + fallback inherited from gateway)
 
 ## Manual Test
 
@@ -77,9 +77,9 @@ cd backend && pytest -q tests/test_remote_asr.py tests/test_eks_remote_realtime_
 
 ### Manual Test Result
 
-- [ ] Pass — pending operator E2E with ai-gateway + asr-service
+- [x] Pass — 2026-10-19; realtime E2E via AI Gateway
 
 ### Commit
 
-- **Hash:** —
-- **Message:** —
+- **Hash:** `da2e19e5`
+- **Message:** [P8-006] Realtime routes via AI Gateway

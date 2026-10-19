@@ -48,3 +48,4 @@ docker compose -p docker down   # remove old stack if you used the folder name b
 - [Docker Compose ops doc](../docs/operations/docker.md)
 - [Local development](../docs/operations/local-development.md)
 - [Realtime backend image](realtime-backend/README.md)
+- [AI Gateway image](ai-gateway/README.md) (Phase 8)
