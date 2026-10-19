@@ -227,6 +227,8 @@ Desktop (Tauri) → WebSocket → Backend → VAD → ASR → Transcript → Des
 
 ## Phase 8: AI Gateway
 
+**Status:** **P8-001–P8-009 implemented** in repo; **P8-010** (ops docs + exit) completes dev-steps — [Phase 8 AI Gateway path](../operations/phase8-ai-gateway-path.md) and [exit checklist](dev-step-phase8-exit.md). **Operator exit sign-off** pending on [dev-step-phase8-exit.md](dev-step-phase8-exit.md).
+
 **Goal:** Introduce model abstraction and routing.
 
 **Deliverables:**

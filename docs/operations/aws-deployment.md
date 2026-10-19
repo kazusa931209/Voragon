@@ -4,7 +4,7 @@
 
 This document describes the planned AWS production deployment for Voragon. Introduced in Phase 6 (EKS) with GPU inference in Phase 7.
 
-**Status:** **Phase 6 complete** (signed off **2026-10-16**) — [P6-001](../../infra/ecr/README.md)–[P6-008](../roadmap/dev-step-p6-008-aws-dev-docs-exit.md). **Phase 7 GPU path implemented** (P7-001–P7-007) — follow [Phase 7 end-to-end (GPU)](phase7-gpu-path.md); [Phase 7 exit](../roadmap/dev-step-phase7-exit.md) for operator sign-off.
+**Status:** **Phase 6 complete** (signed off **2026-10-16**) — [P6-001](../../infra/ecr/README.md)–[P6-008](../roadmap/dev-step-p6-008-aws-dev-docs-exit.md). **Phase 7 GPU path implemented** — [phase7-gpu-path.md](phase7-gpu-path.md); [Phase 7 exit](../roadmap/dev-step-phase7-exit.md). **Phase 8 AI Gateway implemented** (P8-001–P8-009) — [phase8-ai-gateway-path.md](phase8-ai-gateway-path.md); [Phase 8 exit](../roadmap/dev-step-phase8-exit.md).
 
 ## Contributor path (Phase 6 end-to-end)
 
@@ -177,13 +177,18 @@ Full contributor path: **[Phase 7 end-to-end (GPU)](phase7-gpu-path.md)**.
 | 7 | Implemented | P7-007 | [GPU + inference metrics](../../k8s/eks/gpu/README.md#gpu-metrics-p7-007) · [observability.md](observability.md) |
 | 8 | Operator | — | Latency: scrape `voragon_asr_inference_duration_seconds`; record p50/p95 in [Phase 7 exit](../roadmap/dev-step-phase7-exit.md) |
 
-### Phase 8: AI Gateway
+### Phase 8: AI Gateway (implemented)
 
-1. Deploy ai-gateway service
-2. Configure model registry (ConfigMap)
-3. Update realtime-service to route through ai-gateway
-4. Register asr-service in model registry
-5. Validate capability alias resolution
+Full contributor path: **[Phase 8 end-to-end (AI Gateway)](phase8-ai-gateway-path.md)**.
+
+| Step | Status | Dev-step | Doc |
+|------|--------|----------|-----|
+| 1 | Implemented | P8-001–P8-005 | [AI Gateway architecture](../architecture/ai-gateway.md) · gateway pytest in `backend/tests/test_ai_gateway_*.py` |
+| 2 | Implemented | P8-006 | [Remote ASR via gateway](../../k8s/eks/configmap.yaml) (`ASR_REMOTE_VIA_AI_GATEWAY`) |
+| 3 | Implemented | P8-007 | [ai-gateway image](../../docker/ai-gateway/README.md) |
+| 4 | Implemented | P8-008 | [EKS ai-gateway manifests](../../k8s/eks/README.md) |
+| 5 | Implemented | P8-009 | [Gateway metrics](observability.md) · `GET /metrics` on ai-gateway |
+| 6 | Operator | — | [Phase 8 exit](../roadmap/dev-step-phase8-exit.md) — E2E + config-only model change |
 
 ## Container Images
 

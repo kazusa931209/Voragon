@@ -2,6 +2,8 @@
 
 Contributor path for GPU ASR on EKS. Assumes **Phase 6** is already running ([AWS Deployment — Phase 6](aws-deployment.md#contributor-path-phase-6-end-to-end)) and you have **GPU quota** (g5.xlarge) in the target region.
 
+**After Phase 8:** EKS `realtime-config` routes ASR through **ai-gateway** (not direct `asr-service`). Continue with [Phase 8 end-to-end (AI Gateway)](phase8-ai-gateway-path.md).
+
 **Exit sign-off:** [Phase 7 exit checklist](../roadmap/dev-step-phase7-exit.md) after completing this path.
 
 ## Prerequisites

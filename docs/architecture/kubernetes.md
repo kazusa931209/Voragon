@@ -38,7 +38,7 @@ flowchart TB
 |-----------|----------|------|-----|
 | realtime-backend (Service: `realtime-service`) | 1 | CPU | No |
 
-Purpose: validate container images, health probes, ConfigMaps, PVCs, and deployment workflows. Not for performance testing.
+Purpose: validate container images, health probes, ConfigMaps, PVCs, and deployment workflows. Not for performance testing. **AI Gateway** is EKS-only ([phase8-ai-gateway-path.md](../operations/phase8-ai-gateway-path.md)); Kind stays single-pod realtime.
 
 Operational quick start: [k8s/README.md](../../k8s/README.md).
 

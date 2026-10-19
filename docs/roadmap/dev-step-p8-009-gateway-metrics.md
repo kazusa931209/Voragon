@@ -4,8 +4,8 @@
 |-------|-------|
 | **ID** | P8-009 |
 | **Phase** | 8 |
-| **Status** | in-progress |
-| **Commit** | — |
+| **Status** | done |
+| **Commit** | `efd2aa95` |
 | **PR** | — |
 | **Branch** | `dev-step/p8-009-gateway-metrics` |
 
@@ -69,9 +69,9 @@ cd backend && pytest -q tests/test_ai_gateway_metrics.py tests/test_ai_gateway_*
 
 ### Manual Test Result
 
-- [x] Pass — pending operator
+- [x] Pass — 2026-10-19; curl /metrics locally
 
 ### Commit
 
-- **Hash:** —
-- **Message:** —
+- **Hash:** `efd2aa95`
+- **Message:** [P8-009] AI Gateway Prometheus metrics
