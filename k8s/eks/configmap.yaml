@@ -8,7 +8,9 @@ metadata:
     app.kubernetes.io/part-of: voragon
 data:
   ASR_BACKEND: "remote"
-  ASR_REMOTE_BASE_URL: "http://asr-service:8081"
+  ASR_REMOTE_BASE_URL: "http://ai-gateway:8080"
+  ASR_REMOTE_VIA_AI_GATEWAY: "true"
+  ASR_CAPABILITY: "asr.default"
   ASR_MODEL: "tiny"
   LOG_FORMAT: "json"
   HOST: "0.0.0.0"

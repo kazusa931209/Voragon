@@ -22,3 +22,13 @@ output "asr_repository_name" {
   description = "ECR ASR repository name."
   value       = aws_ecr_repository.asr_inference.name
 }
+
+output "ai_gateway_repository_url" {
+  description = "Docker pull/push URI for the ai-gateway repository (P8-007)."
+  value       = aws_ecr_repository.ai_gateway.repository_url
+}
+
+output "ai_gateway_repository_name" {
+  description = "ECR AI Gateway repository name."
+  value       = aws_ecr_repository.ai_gateway.name
+}

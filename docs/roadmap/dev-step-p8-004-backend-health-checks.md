@@ -16,7 +16,7 @@
 
 ## Scope
 
-One verifiable behavior: **AI Gateway periodically probes model backends (`GET /health`), tracks healthy/unhealthy state, reflects it on `GET /v1/models`, blocks inference when unhealthy, and degrades gateway `/health` when no model is routable.**
+One verifiable behavior: **AI Gateway periodically probes model backends (**`GET /health`**), tracks healthy/unhealthy state, reflects it on** `GET /v1/models`**, blocks inference when unhealthy, and degrades gateway** `/health` **when no model is routable.**
 
 - Thresholds: 3 consecutive failures → unhealthy; 2 consecutive successes → healthy (cold start: 1 success if never failed)
 - Configurable interval/timeout via env; background loop + probe on startup
@@ -70,9 +70,9 @@ cd backend && pytest -q tests/test_ai_gateway_health_checks.py tests/test_ai_gat
 
 ### Manual Test Result
 
-- [ ] Pass — pending operator stop/start asr-service
+- [x] Pass — 2026-10-19; models health + stop/start asr-service
 
 ### Commit
 
-- **Hash:** —
-- **Message:** —
+- **Hash:** `0c84221`
+- **Message:** [P8-004] AI Gateway backend health checks

@@ -38,7 +38,7 @@ flowchart TB
 |-----------|----------|------|-----|
 | realtime-backend (Service: `realtime-service`) | 1 | CPU | No |
 
-Purpose: validate container images, health probes, ConfigMaps, PVCs, and deployment workflows. Not for performance testing.
+Purpose: validate container images, health probes, ConfigMaps, PVCs, and deployment workflows. Not for performance testing. **AI Gateway** is EKS-only ([phase8-ai-gateway-path.md](../operations/phase8-ai-gateway-path.md)); Kind stays single-pod realtime.
 
 Operational quick start: [k8s/README.md](../../k8s/README.md).
 
@@ -50,7 +50,7 @@ Operational quick start: [k8s/README.md](../../k8s/README.md).
 
 **Phase 7 (implemented):** Separate **`asr-service`** on GPU nodes — manifests in [k8s/eks](../../k8s/eks/), contributor path [Phase 7 end-to-end (GPU)](../operations/phase7-gpu-path.md).
 
-The diagram below is the **target** layout through Phase 8 (`ai-gateway`). GPU `asr-service` is deployed when following the Phase 7 path; `ai-gateway` remains future.
+The diagram below is the **target** layout through Phase 8 (`ai-gateway`). GPU `asr-service` and CPU `ai-gateway` manifests live under [k8s/eks](../../k8s/eks/) (P7–P8).
 
 ```mermaid
 flowchart TB

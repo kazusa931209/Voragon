@@ -6,6 +6,7 @@ Terraform creates:
 |------------|-------|------------|
 | `voragon/realtime-backend` (P6-001) | Realtime CPU service | [docker/realtime-backend/Dockerfile](../../docker/realtime-backend/Dockerfile) |
 | `voragon/asr-inference` (P7-003) | GPU ASR service | [docker/asr-inference/Dockerfile](../../docker/asr-inference/Dockerfile) |
+| `voragon/ai-gateway` (P8-007) | AI Gateway (CPU) | [docker/ai-gateway/Dockerfile](../../docker/ai-gateway/Dockerfile) |
 
 ## Prerequisites
 

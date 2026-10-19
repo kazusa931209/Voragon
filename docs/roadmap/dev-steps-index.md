@@ -14,7 +14,7 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 
 ## Active Step
 
-**P8-005** — [AI Gateway fallback routing](dev-step-p8-005-fallback-routing.md) (`in-progress`).
+**P8-010** — [Ops docs and Phase 8 exit](dev-step-p8-010-ops-docs-phase8-exit.md) (`in-progress`).
 
 ---
 
@@ -150,11 +150,16 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 | P8-002 | AI Gateway model registry | done | — | [dev-step-p8-002-model-registry.md](dev-step-p8-002-model-registry.md) |
 | P8-003 | AI Gateway ASR inference proxy | done | [`bd4d9d2`](https://github.com/kazusa931209-cmd/Voragon/commit/bd4d9d2) | [dev-step-p8-003-asr-inference-proxy.md](dev-step-p8-003-asr-inference-proxy.md) |
 | P8-004 | AI Gateway backend health checks | done | [`0c84221`](https://github.com/kazusa931209-cmd/Voragon/commit/0c84221) | [dev-step-p8-004-backend-health-checks.md](dev-step-p8-004-backend-health-checks.md) |
-| P8-005 | AI Gateway fallback routing | in-progress | — | [dev-step-p8-005-fallback-routing.md](dev-step-p8-005-fallback-routing.md) |
+| P8-005 | AI Gateway fallback routing | done | [`23e2278`](https://github.com/kazusa931209-cmd/Voragon/commit/23e2278) | [dev-step-p8-005-fallback-routing.md](dev-step-p8-005-fallback-routing.md) |
+| P8-006 | Realtime routes via AI Gateway | done | [`da2e19e5`](https://github.com/kazusa931209-cmd/Voragon/commit/da2e19e5) | [dev-step-p8-006-realtime-routes-via-gateway.md](dev-step-p8-006-realtime-routes-via-gateway.md) |
+| P8-007 | AI Gateway container image | done | [`6559a795`](https://github.com/kazusa931209-cmd/Voragon/commit/6559a795) | [dev-step-p8-007-ai-gateway-image.md](dev-step-p8-007-ai-gateway-image.md) |
+| P8-008 | EKS AI Gateway manifests | done | [`d9e73503`](https://github.com/kazusa931209-cmd/Voragon/commit/d9e73503) | [dev-step-p8-008-eks-ai-gateway-manifests.md](dev-step-p8-008-eks-ai-gateway-manifests.md) |
+| P8-009 | AI Gateway Prometheus metrics | done | [`efd2aa95`](https://github.com/kazusa931209-cmd/Voragon/commit/efd2aa95) | [dev-step-p8-009-gateway-metrics.md](dev-step-p8-009-gateway-metrics.md) |
+| P8-010 | Ops docs and Phase 8 exit | in-progress | — | [dev-step-p8-010-ops-docs-phase8-exit.md](dev-step-p8-010-ops-docs-phase8-exit.md) |
 
 **Suggested order (planned):** P8-001 → P8-002 (model registry) → P8-003 (ASR inference proxy) → P8-004 (backend health checks) → P8-005 (fallback) → P8-006 (realtime routes via gateway) → P8-007 (container image) → P8-008 (Kind/EKS manifests) → P8-009 (gateway metrics) → P8-010 (ops docs + Phase 8 exit).
 
-**Phase 8 exit:** See [phases.md](phases.md) — realtime-service calls AI Gateway, not ASR directly; model changes via config.
+**Phase 8 exit:** [dev-step-phase8-exit.md](dev-step-phase8-exit.md) — operator E2E after [phase8-ai-gateway-path.md](../operations/phase8-ai-gateway-path.md). All P8 dev-steps done when P8-010 lands. See [phases.md](phases.md).
 
 ---
 

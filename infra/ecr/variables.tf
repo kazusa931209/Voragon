@@ -15,3 +15,9 @@ variable "asr_repository_name" {
   type        = string
   default     = "voragon/asr-inference"
 }
+
+variable "ai_gateway_repository_name" {
+  description = "ECR repository for AI Gateway images (P8-007)."
+  type        = string
+  default     = "voragon/ai-gateway"
+}

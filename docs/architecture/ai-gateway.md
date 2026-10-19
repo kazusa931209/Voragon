@@ -191,6 +191,10 @@ List registered models and their health status.
 
 AI Gateway health check.
 
+### GET `/metrics`
+
+Prometheus metrics for routing, inference latency, fallbacks, and routable model count ([observability.md](../operations/observability.md)).
+
 ## Future Model Types
 
 The AI Gateway is designed to support additional model types through the same capability-routing pattern:

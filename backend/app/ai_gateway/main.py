@@ -14,9 +14,10 @@ from pathlib import Path
 import httpx
 import uvicorn
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 
 from app.ai_gateway.health import ModelHealthChecker, ModelHealthStore
+from app.ai_gateway.metrics import gateway_metrics_body, metrics_content_type
 from app.ai_gateway.registry import load_model_registry
 from app.ai_gateway.routes import router as gateway_router
 from app.config import get_settings
@@ -85,6 +86,19 @@ async def health(request: Request) -> JSONResponse:
         "models_routable": routable,
     }
     return JSONResponse(status_code=200 if ok else 503, content=payload)
+
+
+@app.get("/metrics")
+async def metrics(request: Request) -> Response:
+    settings = get_settings()
+    registry = request.app.state.model_registry
+    health_store: ModelHealthStore = request.app.state.model_health
+    body = await gateway_metrics_body(
+        registry,
+        health_store,
+        health_checks_enabled=settings.ai_gateway_health_checks_enabled,
+    )
+    return Response(content=body, media_type=metrics_content_type())
 
 
 def main() -> None:

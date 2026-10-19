@@ -64,6 +64,11 @@ flowchart TB
 | `voragon_gpu_memory_used_bytes` | Gauge | asr-service | GPU memory usage |
 | `voragon_inference_queue_depth` | Gauge | asr-service | Pending inference requests |
 | `voragon_model_load_duration_seconds` | Gauge | asr-service | Model loading time at startup |
+| `voragon_gateway_inference_requests_total` | Counter | ai-gateway | Successful inference by capability, model, kind |
+| `voragon_gateway_inference_errors_total` | Counter | ai-gateway | Failed inference requests by capability |
+| `voragon_gateway_inference_duration_seconds` | Histogram | ai-gateway | Gateway inference latency (includes upstream) |
+| `voragon_gateway_fallback_routes_total` | Counter | ai-gateway | Responses served after primary skip/fallback |
+| `voragon_gateway_models_routable` | Gauge | ai-gateway | Routable registered models |
 
 ### Distributed Tracing (OpenTelemetry)
 
