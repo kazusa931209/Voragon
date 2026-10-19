@@ -85,7 +85,6 @@ If `asr.default` is later changed to a different model, no client or realtime-se
 The model registry maps capability aliases to model configurations:
 
 ```yaml
-# Conceptual configuration — not implemented
 models:
   whisper-large-v3-turbo:
     type: asr
@@ -102,9 +101,15 @@ models:
     version: "1.0"
     languages: [en]
     health_check_interval_s: 30
+
+routing:
+  asr.default:
+    primary: whisper-large-v3-turbo
+    fallback:
+      - whisper-small
 ```
 
-Stored in ConfigMap (Kubernetes) or configuration file (local).
+When `routing` is omitted, each capability maps to its primary model only (no fallback). Stored in ConfigMap (Kubernetes) or configuration file (local).
 
 ## Inference Request Flow
 

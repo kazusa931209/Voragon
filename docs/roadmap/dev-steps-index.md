@@ -14,7 +14,7 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 
 ## Active Step
 
-**P8-004** — [AI Gateway backend health checks](dev-step-p8-004-backend-health-checks.md) (`in-progress`).
+**P8-005** — [AI Gateway fallback routing](dev-step-p8-005-fallback-routing.md) (`in-progress`).
 
 ---
 
@@ -149,7 +149,8 @@ Registry of all dev-steps. **One dev-step = one commit** (a PR may include multi
 | P8-001 | AI Gateway service scaffold | done | — | [dev-step-p8-001-ai-gateway-scaffold.md](dev-step-p8-001-ai-gateway-scaffold.md) |
 | P8-002 | AI Gateway model registry | done | — | [dev-step-p8-002-model-registry.md](dev-step-p8-002-model-registry.md) |
 | P8-003 | AI Gateway ASR inference proxy | done | [`bd4d9d2`](https://github.com/kazusa931209-cmd/Voragon/commit/bd4d9d2) | [dev-step-p8-003-asr-inference-proxy.md](dev-step-p8-003-asr-inference-proxy.md) |
-| P8-004 | AI Gateway backend health checks | in-progress | — | [dev-step-p8-004-backend-health-checks.md](dev-step-p8-004-backend-health-checks.md) |
+| P8-004 | AI Gateway backend health checks | done | [`0c84221`](https://github.com/kazusa931209-cmd/Voragon/commit/0c84221) | [dev-step-p8-004-backend-health-checks.md](dev-step-p8-004-backend-health-checks.md) |
+| P8-005 | AI Gateway fallback routing | in-progress | — | [dev-step-p8-005-fallback-routing.md](dev-step-p8-005-fallback-routing.md) |
 
 **Suggested order (planned):** P8-001 → P8-002 (model registry) → P8-003 (ASR inference proxy) → P8-004 (backend health checks) → P8-005 (fallback) → P8-006 (realtime routes via gateway) → P8-007 (container image) → P8-008 (Kind/EKS manifests) → P8-009 (gateway metrics) → P8-010 (ops docs + Phase 8 exit).
 

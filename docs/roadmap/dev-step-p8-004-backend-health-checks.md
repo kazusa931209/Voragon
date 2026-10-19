@@ -4,8 +4,8 @@
 |-------|-------|
 | **ID** | P8-004 |
 | **Phase** | 8 |
-| **Status** | in-progress |
-| **Commit** | — |
+| **Status** | done |
+| **Commit** | `0c84221` |
 | **PR** | — |
 | **Branch** | `dev-step/p8-004-backend-health-checks` |
 
