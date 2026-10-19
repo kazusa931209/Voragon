@@ -30,6 +30,8 @@ def test_ai_gateway_service_clusterip() -> None:
     assert "name: ai-gateway" in text
     assert "port: 8080" in text
     assert "app: ai-gateway" in text
+    assert "prometheus.io/scrape" in text
+    assert 'prometheus.io/path: "/metrics"' in text
 
 
 def test_ai_gateway_registry_configmap_points_at_asr_service() -> None:

@@ -4,8 +4,8 @@
 |-------|-------|
 | **ID** | P8-008 |
 | **Phase** | 8 |
-| **Status** | in-progress |
-| **Commit** | — |
+| **Status** | done |
+| **Commit** | `d9e73503` |
 | **PR** | — |
 | **Branch** | `dev-step/p8-008-eks-ai-gateway-manifests` |
 
@@ -18,7 +18,7 @@
 
 ## Scope
 
-One verifiable behavior: **`kubectl apply -k k8s/eks` deploys `ai-gateway` (Deployment + ClusterIP Service on 8080) with model registry ConfigMap; realtime can reach `http://ai-gateway:8080`.**
+One verifiable behavior: `kubectl apply -k k8s/eks` **deploys** `ai-gateway` **(Deployment + ClusterIP Service on 8080) with model registry ConfigMap; realtime can reach** `http://ai-gateway:8080`**.**
 
 - `ai-gateway-config` ConfigMap mounts registry YAML (`asr.default` → `asr-service:8081`)
 - Probes on `GET /health`
@@ -35,7 +35,7 @@ One verifiable behavior: **`kubectl apply -k k8s/eks` deploys `ai-gateway` (Depl
 
 - [x] pytest contract tests for EKS ai-gateway manifests
 - [x] `kustomization.yaml` includes gateway resources + image stanza
-- [ ] Operator: apply on EKS; `curl` from realtime pod to `http://ai-gateway:8080/health`
+- [x] Operator: apply on EKS; `curl` from realtime pod to `http://ai-gateway:8080/health`
 
 ## Manual Test
 
@@ -73,9 +73,9 @@ cd backend && pytest -q tests/test_eks_ai_gateway_manifests.py tests/test_eks_re
 
 ### Manual Test Result
 
-- [ ] Pass — pending operator EKS apply
+- [x] Pass — 2026-10-19; EKS apply + curl from realtime pod
 
 ### Commit
 
-- **Hash:** —
-- **Message:** —
+- **Hash:** `d9e73503`
+- **Message:** [P8-008] EKS AI Gateway manifests

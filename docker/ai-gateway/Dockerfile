@@ -13,6 +13,7 @@ COPY backend/app ./app
 RUN pip install --no-cache-dir \
     "fastapi>=0.115.0" \
     "httpx>=0.28.0" \
+    "prometheus-client>=0.21.0" \
     "pydantic-settings>=2.6.0" \
     "pyyaml>=6.0.0" \
     "uvicorn[standard]>=0.32.0"

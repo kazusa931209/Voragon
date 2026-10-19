@@ -7,6 +7,7 @@ from fastapi import HTTPException
 
 from app.ai_gateway.api_models import GatewayAsrInferenceRequest, GatewayAsrInferenceResponse
 from app.ai_gateway.health import ModelHealthStore
+from app.ai_gateway.metrics import record_inference_error, record_inference_success
 from app.ai_gateway.registry import ModelRegistry, ModelRegistryEntry
 from app.asr.api_models import AsrInferenceRequest, AsrInferenceResponse
 
@@ -53,7 +54,8 @@ async def _forward_asr_to_model(
             detail=f"Upstream ASR returned invalid JSON for {model_id}: {exc}",
         ) from exc
 
-    latency_ms = int((time.perf_counter() - started) * 1000)
+    duration_s = time.perf_counter() - started
+    latency_ms = int(duration_s * 1000)
     return GatewayAsrInferenceResponse(
         text=parsed.text,
         segment_id=body.segment_id,
@@ -78,9 +80,12 @@ async def proxy_asr_inference(
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
+    primary_model_id = chain[0][0]
+    kind = "final" if body.is_final else "partial"
     tried: list[str] = []
     for model_id, entry in chain:
         if entry.type != "asr":
+            record_inference_error(body.capability)
             raise HTTPException(
                 status_code=400,
                 detail=f"Model {model_id!r} for capability {body.capability!r} is not ASR",
@@ -88,15 +93,27 @@ async def proxy_asr_inference(
         if not health_store.is_routable(model_id, checks_enabled=health_checks_enabled):
             tried.append(model_id)
             continue
+        started = time.perf_counter()
         try:
-            return await _forward_asr_to_model(http_client, model_id, entry, body)
+            result = await _forward_asr_to_model(http_client, model_id, entry, body)
         except HTTPException as exc:
             if exc.status_code == 503:
                 tried.append(model_id)
                 continue
+            record_inference_error(body.capability)
             raise
+        duration_s = time.perf_counter() - started
+        record_inference_success(
+            capability=body.capability,
+            model=model_id,
+            kind=kind,
+            duration_s=duration_s,
+            used_fallback=model_id != primary_model_id or bool(tried),
+        )
+        return result
 
     if tried:
+        record_inference_error(body.capability)
         raise HTTPException(
             status_code=503,
             detail=(
@@ -104,4 +121,5 @@ async def proxy_asr_inference(
                 f"(tried: {', '.join(tried)})"
             ),
         )
+    record_inference_error(body.capability)
     raise HTTPException(status_code=404, detail=f"Unknown capability: {body.capability}")
